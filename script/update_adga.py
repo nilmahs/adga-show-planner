@@ -11,7 +11,7 @@ ROOT=Path(__file__).resolve().parents[1]
 DATA_JS=ROOT/"data"/"shows.js"
 CACHE_JSON=ROOT/"data"/"geocode_cache.json"
 SOURCE_URL="https://adga.org/adga-sanctioned-show-list/"
-UA="HardwickeFarms-ADGA-Show-Planner/1.0"
+UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
 EMAIL_RE=re.compile(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}")
 PHONE_RE=re.compile(r"(?:\+?1[\s.\-]?)?(?:\(?\d{3}\)?[\s.\-]?)\d{3}[\s.\-]\d{4}")
 
@@ -42,34 +42,112 @@ def contact(p):
     return {"name":p[0],"address":", ".join(addr),"phone":phone,"email":email,"raw":"\n".join(p)}
 
 def fetch_rows():
-    r=requests.get(SOURCE_URL,timeout=45,headers={"User-Agent":UA,"Accept":"text/html"})
+    headers = {
+        "User-Agent": UA,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Referer": "https://adga.org/",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+    }
+
+    session = requests.Session()
+    r = session.get(SOURCE_URL, timeout=60, headers=headers, allow_redirects=True)
     r.raise_for_status()
-    soup=BeautifulSoup(r.text,"html.parser")
-    table=None
+    soup = BeautifulSoup(r.text, "html.parser")
+
+    table = None
     for t in soup.find_all("table"):
-        h=" | ".join(compact(x.get_text(" ",strip=True)).lower() for x in t.find_all("th"))
-        if "date of judging" in h and "show name" in h and "location" in h:
-            table=t; break
+        table_text = compact(t.get_text(" ", strip=True)).lower()
+        if (
+            "date of judging" in table_text
+            and "show name" in table_text
+            and "location" in table_text
+            and "contact" in table_text
+        ):
+            table = t
+            break
+
     if table is None:
-        raise RuntimeError("ADGA sanctioned-show table not found; existing archive was not changed.")
-    out=[]
+        dateish = re.compile(r"^\\s*\\d{1,2}/\\d{1,2}/\\d{4}")
+        for t in soup.find_all("table"):
+            good = 0
+            for tr in t.find_all("tr"):
+                td = tr.find_all(["td", "th"])
+                if len(td) >= 7 and dateish.search(compact(td[0].get_text(" ", strip=True))):
+                    good += 1
+                    if good >= 2:
+                        table = t
+                        break
+            if table is not None:
+                break
+
+    if table is None:
+        page_text = compact(soup.get_text(" ", strip=True))
+        has_heading = "ADGA Sanctioned Show List" in page_text
+        has_columns = "Date of Judging" in page_text and "Show Name" in page_text
+        has_known_date = bool(re.search(r"\\b\\d{1,2}/\\d{1,2}/2026\\b", page_text))
+        title = compact(soup.title.get_text(" ", strip=True)) if soup.title else "(no title)"
+        raise RuntimeError(
+            "ADGA sanctioned-show table was not found in the HTML returned to GitHub. "
+            f"HTTP={r.status_code}; final_url={r.url}; title={title!r}; "
+            f"page_chars={len(r.text)}; heading_present={has_heading}; "
+            f"column_text_present={has_columns}; date_text_present={has_known_date}. "
+            "Existing archive was not changed."
+        )
+
+    out = []
     for tr in table.find_all("tr"):
-        td=tr.find_all("td")
-        if len(td)<7: continue
-        p=[parts(c) for c in td[:7]]
-        raw=joined(p[0]," ")
-        try: start,end=parse_date_range(raw)
+        cells = tr.find_all(["td", "th"])
+        if len(cells) < 7:
+            continue
+
+        p = [parts(c) for c in cells[:7]]
+        raw = joined(p[0], " ")
+        if not re.match(r"^\\s*\\d{1,2}/\\d{1,2}/\\d{4}", raw):
+            continue
+
+        try:
+            start, end = parse_date_range(raw)
         except Exception as e:
-            print(f"WARNING skipped date {raw!r}: {e}",file=sys.stderr); continue
-        c=contact(p[6]); name=joined(p[1]," — "); st=joined(p[2]," "); loc=joined(p[3]," ")
-        key=" | ".join([start[:4],norm(name),norm(st),norm(loc)])
-        out.append({"date_adga":raw,"start":start,"end":end,"month":int(start[5:7]),
-          "show_name":name,"state_original":st,"state":st,"location":loc,
-          "judges":joined(p[4],", "),"show_type":joined(p[5],", "),
-          "contact_name":c["name"],"contact_address":c["address"],"contact_phone":c["phone"],
-          "contact_email":c["email"],"contact_raw":c["raw"],"source_key":key,"source_url":SOURCE_URL})
+            print(f"WARNING skipped date {raw!r}: {e}", file=sys.stderr)
+            continue
+
+        c = contact(p[6])
+        name = joined(p[1], " — ")
+        st = joined(p[2], " ")
+        loc = joined(p[3], " ")
+        key = " | ".join([start[:4], norm(name), norm(st), norm(loc)])
+
+        out.append({
+            "date_adga": raw,
+            "start": start,
+            "end": end,
+            "month": int(start[5:7]),
+            "show_name": name,
+            "state_original": st,
+            "state": st,
+            "location": loc,
+            "judges": joined(p[4], ", "),
+            "show_type": joined(p[5], ", "),
+            "contact_name": c["name"],
+            "contact_address": c["address"],
+            "contact_phone": c["phone"],
+            "contact_email": c["email"],
+            "contact_raw": c["raw"],
+            "source_key": key,
+            "source_url": SOURCE_URL,
+        })
+
     if not out:
-        raise RuntimeError("Zero valid ADGA show rows parsed; existing archive was not changed.")
+        raise RuntimeError(
+            "ADGA show table was found, but zero valid show rows were parsed. "
+            "Existing archive was not changed."
+        )
+
+    print(f"Fetched and parsed {len(out)} current ADGA show rows.")
     return out
 
 def load_existing():
