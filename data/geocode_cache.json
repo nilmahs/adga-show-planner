@@ -1,0 +1,1057 @@
+{
+  "columbia|south carolina": {
+    "lat": 34.072613,
+    "lon": -81.179617,
+    "source": "seeded from initial planner"
+  },
+  "sandwich|new hampshire": {
+    "lat": 43.816169,
+    "lon": -71.450614,
+    "source": "seeded from initial planner"
+  },
+  "west springfield|massachusettes": {
+    "lat": 42.115066,
+    "lon": -72.641109,
+    "source": "seeded from initial planner"
+  },
+  "dallas|texas": {
+    "lat": 32.996848,
+    "lon": -96.792113,
+    "source": "seeded from initial planner"
+  },
+  "bloomsburg|pennsylvania": {
+    "lat": 41.011528,
+    "lon": -76.438379,
+    "source": "seeded from initial planner"
+  },
+  "jerseyville|ontario, canada": {
+    "lat": 43.1991667,
+    "lon": -80.1061111,
+    "source": "seeded from initial planner"
+  },
+  "cumberland|maine": {
+    "lat": 43.809818,
+    "lon": -70.2484,
+    "source": "seeded from initial planner"
+  },
+  "ashland|ohio": {
+    "lat": 40.855892,
+    "lon": -82.318931,
+    "source": "seeded from initial planner"
+  },
+  "delaware|ohio": {
+    "lat": 40.293186,
+    "lon": -83.072312,
+    "source": "seeded from initial planner"
+  },
+  "amarillo|texas": {
+    "lat": 35.203238,
+    "lon": -101.842052,
+    "source": "seeded from initial planner"
+  },
+  "fayetteville|tennessee": {
+    "lat": 35.152678,
+    "lon": -86.566448,
+    "source": "seeded from initial planner"
+  },
+  "calendonia|minnesota": {
+    "lat": 43.622079,
+    "lon": -91.483657,
+    "source": "seeded from initial planner"
+  },
+  "albuquerque|new mexico": {
+    "lat": 35.0936,
+    "lon": -106.6423,
+    "source": "seeded from initial planner"
+  },
+  "knoxville|tennessee": {
+    "lat": 35.9609,
+    "lon": -83.9189,
+    "source": "seeded from initial planner"
+  },
+  "timonium|maryland": {
+    "lat": 39.438636,
+    "lon": -76.633791,
+    "source": "seeded from initial planner"
+  },
+  "longmont|colorado": {
+    "lat": 40.177921,
+    "lon": -105.10095,
+    "source": "seeded from initial planner"
+  },
+  "fletcher|north carolina": {
+    "lat": 35.44989,
+    "lon": -82.496559,
+    "source": "seeded from initial planner"
+  },
+  "pike|new york": {
+    "lat": 42.556389,
+    "lon": -78.153056,
+    "source": "seeded from initial planner"
+  },
+  "nashville|tennessee": {
+    "lat": 36.167028,
+    "lon": -86.778441,
+    "source": "seeded from initial planner"
+  },
+  "ardmore|oklahoma": {
+    "lat": 34.176681,
+    "lon": -97.134157,
+    "source": "seeded from initial planner"
+  },
+  "sandwich|illinois": {
+    "lat": 41.635286,
+    "lon": -88.639303,
+    "source": "seeded from initial planner"
+  },
+  "wauseon|ohio": {
+    "lat": 41.566796,
+    "lon": -84.153745,
+    "source": "seeded from initial planner"
+  },
+  "blackfoot|idaho": {
+    "lat": 43.194327,
+    "lon": -112.361545,
+    "source": "seeded from initial planner"
+  },
+  "blandford|massachusetts": {
+    "lat": 42.182949,
+    "lon": -72.936114,
+    "source": "seeded from initial planner"
+  },
+  "blue hill|maine": {
+    "lat": 44.434265,
+    "lon": -68.588513,
+    "source": "seeded from initial planner"
+  },
+  "dickson|tennessee": {
+    "lat": 36.076014,
+    "lon": -87.399532,
+    "source": "seeded from initial planner"
+  },
+  "puyallup|washington": {
+    "lat": 47.199123,
+    "lon": -122.315097,
+    "source": "seeded from initial planner"
+  },
+  "meridian|mississippi": {
+    "lat": 32.357441,
+    "lon": -88.655973,
+    "source": "seeded from initial planner"
+  },
+  "duquoin|illinois": {
+    "lat": 38.013687,
+    "lon": -89.233268,
+    "source": "seeded from initial planner"
+  },
+  "huron|south dakota": {
+    "lat": 44.359022,
+    "lon": -98.216293,
+    "source": "seeded from initial planner"
+  },
+  "elkhorn|wisconsin": {
+    "lat": 42.700928,
+    "lon": -88.546209,
+    "source": "seeded from initial planner"
+  },
+  "blackfoort|idaho": {
+    "lat": 43.194327,
+    "lon": -112.361545,
+    "source": "seeded from initial planner"
+  },
+  "salem|oregon": {
+    "lat": 44.926039,
+    "lon": -122.979692,
+    "source": "seeded from initial planner"
+  },
+  "syracuse|new york": {
+    "lat": 43.0459,
+    "lon": -76.1528,
+    "source": "seeded from initial planner"
+  },
+  "novi|michigan": {
+    "lat": 42.473495,
+    "lon": -83.522423,
+    "source": "seeded from initial planner"
+  },
+  "saint paul|minnesota": {
+    "lat": 44.902691,
+    "lon": -93.096435,
+    "source": "seeded from initial planner"
+  },
+  "burton|ohio": {
+    "lat": 41.452702,
+    "lon": -81.15262,
+    "source": "seeded from initial planner"
+  },
+  "monroe|washington": {
+    "lat": 47.85853,
+    "lon": -121.947376,
+    "source": "seeded from initial planner"
+  },
+  "filer|idaho": {
+    "lat": 42.565269,
+    "lon": -114.614047,
+    "source": "seeded from initial planner"
+  },
+  "lyndonville|vermont": {
+    "lat": 44.540766,
+    "lon": -72.009168,
+    "source": "seeded from initial planner"
+  },
+  "lexington|virginia": {
+    "lat": 37.788463,
+    "lon": -79.458111,
+    "source": "seeded from initial planner"
+  },
+  "lima|ohio": {
+    "lat": 40.764066,
+    "lon": -84.097296,
+    "source": "seeded from initial planner"
+  },
+  "boise|idaho": {
+    "lat": 43.6136,
+    "lon": -116.2025,
+    "source": "seeded from initial planner"
+  },
+  "willington|ohio": {
+    "lat": 41.171178,
+    "lon": -82.226915,
+    "source": "seeded from initial planner"
+  },
+  "greenville|ohio": {
+    "lat": 40.098726,
+    "lon": -84.634189,
+    "source": "seeded from initial planner"
+  },
+  "heath|massachusetts": {
+    "lat": 42.685347,
+    "lon": -72.839101,
+    "source": "seeded from initial planner"
+  },
+  "indianapolis|indiana": {
+    "lat": 39.938417,
+    "lon": -86.13894,
+    "source": "seeded from initial planner"
+  },
+  "blackstone|virginia": {
+    "lat": 37.091578,
+    "lon": -77.985063,
+    "source": "seeded from initial planner"
+  },
+  "willcox|arizona": {
+    "lat": 32.372977,
+    "lon": -109.863111,
+    "source": "seeded from initial planner"
+  },
+  "sunbury|pennsylvania": {
+    "lat": 40.855122,
+    "lon": -76.777611,
+    "source": "seeded from initial planner"
+  },
+  "sedalia|missouri": {
+    "lat": 38.696076,
+    "lon": -93.232268,
+    "source": "seeded from initial planner"
+  },
+  "coeur d'alene|idaho": {
+    "lat": 47.692841,
+    "lon": -116.784976,
+    "source": "seeded from initial planner"
+  },
+  "des moines|iowa": {
+    "lat": 41.6005,
+    "lon": -93.6088,
+    "source": "seeded from initial planner"
+  },
+  "pecatonia|illinois": {
+    "lat": 42.305111,
+    "lon": -89.347225,
+    "source": "seeded from initial planner"
+  },
+  "gaithersburg|maryland": {
+    "lat": 39.14187,
+    "lon": -77.188993,
+    "source": "seeded from initial planner"
+  },
+  "hamburg|new york": {
+    "lat": 42.733404,
+    "lon": -78.838853,
+    "source": "seeded from initial planner"
+  },
+  "springfield|illinois": {
+    "lat": 39.80004,
+    "lon": -89.649531,
+    "source": "seeded from initial planner"
+  },
+  "san jose|california": {
+    "lat": 37.3894,
+    "lon": -121.8868,
+    "source": "seeded from initial planner"
+  },
+  "walton|new york": {
+    "lat": 42.175647,
+    "lon": -75.153177,
+    "source": "seeded from initial planner"
+  },
+  "palmyra|new york": {
+    "lat": 43.062192,
+    "lon": -77.221798,
+    "source": "seeded from initial planner"
+  },
+  "west allis|wisconsin": {
+    "lat": 43.0167,
+    "lon": -88.007,
+    "source": "seeded from initial planner"
+  },
+  "vernal|utah": {
+    "lat": 40.440613,
+    "lon": -109.546883,
+    "source": "seeded from initial planner"
+  },
+  "santa rosa|california": {
+    "lat": 38.443123,
+    "lon": -122.751722,
+    "source": "seeded from initial planner"
+  },
+  "centreville|maryland": {
+    "lat": 39.056423,
+    "lon": -76.044975,
+    "source": "seeded from initial planner"
+  },
+  "ridgefield|washinton": {
+    "lat": 45.784634,
+    "lon": -122.693354,
+    "source": "seeded from initial planner"
+  },
+  "berea|ohio": {
+    "lat": 41.367557,
+    "lon": -81.861756,
+    "source": "seeded from initial planner"
+  },
+  "belvidere|illinois": {
+    "lat": 42.259465,
+    "lon": -88.850943,
+    "source": "seeded from initial planner"
+  },
+  "jefferson|ohio": {
+    "lat": 41.733513,
+    "lon": -80.756166,
+    "source": "seeded from initial planner"
+  },
+  "ridgefield|washington": {
+    "lat": 45.784634,
+    "lon": -122.693354,
+    "source": "seeded from initial planner"
+  },
+  "franklin|tennessee": {
+    "lat": 35.932782,
+    "lon": -86.878833,
+    "source": "seeded from initial planner"
+  },
+  "grants pass|oregon": {
+    "lat": 42.463758,
+    "lon": -123.345727,
+    "source": "seeded from initial planner"
+  },
+  "new paltz|new york": {
+    "lat": 41.743346,
+    "lon": -74.083875,
+    "source": "seeded from initial planner"
+  },
+  "roseburg|oregon": {
+    "lat": 43.222726,
+    "lon": -123.366437,
+    "source": "seeded from initial planner"
+  },
+  "douglas|wyoming": {
+    "lat": 42.762558,
+    "lon": -105.385484,
+    "source": "seeded from initial planner"
+  },
+  "costa mesa|california": {
+    "lat": 33.677711,
+    "lon": -117.909623,
+    "source": "seeded from initial planner"
+  },
+  "bangor|maine": {
+    "lat": 44.824199,
+    "lon": -68.791839,
+    "source": "seeded from initial planner"
+  },
+  "west friendship|maryland": {
+    "lat": 39.293447,
+    "lon": -76.966031,
+    "source": "seeded from initial planner"
+  },
+  "woodstock|illinois": {
+    "lat": 42.319775,
+    "lon": -88.447671,
+    "source": "seeded from initial planner"
+  },
+  "dunbar|pennsylvania": {
+    "lat": 39.972171,
+    "lon": -79.64305,
+    "source": "seeded from initial planner"
+  },
+  "morris|new york": {
+    "lat": 42.547807,
+    "lon": -75.244764,
+    "source": "seeded from initial planner"
+  },
+  "springfield|missouri": {
+    "lat": 37.2152,
+    "lon": -93.295,
+    "source": "seeded from initial planner"
+  },
+  "bloomington|illinois": {
+    "lat": 40.478295,
+    "lon": -88.989318,
+    "source": "seeded from initial planner"
+  },
+  "york|pennsylvania": {
+    "lat": 39.963539,
+    "lon": -76.726887,
+    "source": "seeded from initial planner"
+  },
+  "tallmadge|ohio": {
+    "lat": 41.097492,
+    "lon": -81.425966,
+    "source": "seeded from initial planner"
+  },
+  "gridley|california": {
+    "lat": 39.358855,
+    "lon": -121.689777,
+    "source": "seeded from initial planner"
+  },
+  "rochester|minnesota": {
+    "lat": 44.049572,
+    "lon": -92.48962,
+    "source": "seeded from initial planner"
+  },
+  "boonville|new york": {
+    "lat": 43.478615,
+    "lon": -75.343973,
+    "source": "seeded from initial planner"
+  },
+  "goshen|indiana": {
+    "lat": 41.584484,
+    "lon": -85.837988,
+    "source": "seeded from initial planner"
+  },
+  "columbus|ohio": {
+    "lat": 40.1444,
+    "lon": -82.9789,
+    "source": "seeded from initial planner"
+  },
+  "urbana|illinois": {
+    "lat": 40.109522,
+    "lon": -88.203631,
+    "source": "seeded from initial planner"
+  },
+  "meyersdale|pennsylvania": {
+    "lat": 39.790489,
+    "lon": -79.026141,
+    "source": "seeded from initial planner"
+  },
+  "redmond|oregon": {
+    "lat": 44.27669,
+    "lon": -121.189604,
+    "source": "seeded from initial planner"
+  },
+  "lake elmo|minnesota": {
+    "lat": 44.994609,
+    "lon": -92.90565,
+    "source": "seeded from initial planner"
+  },
+  "charlotte|michigan": {
+    "lat": 42.570169,
+    "lon": -84.835181,
+    "source": "seeded from initial planner"
+  },
+  "union grove|wisconsin": {
+    "lat": 42.689643,
+    "lon": -88.039004,
+    "source": "seeded from initial planner"
+  },
+  "harrington|delaware": {
+    "lat": 38.924031,
+    "lon": -75.584268,
+    "source": "seeded from initial planner"
+  },
+  "west chester|pennsylvania": {
+    "lat": 39.984458,
+    "lon": -75.596231,
+    "source": "seeded from initial planner"
+  },
+  "grayslake|illinois": {
+    "lat": 42.34848,
+    "lon": -88.037789,
+    "source": "seeded from initial planner"
+  },
+  "danville|pennsylvania": {
+    "lat": 40.979895,
+    "lon": -76.622897,
+    "source": "seeded from initial planner"
+  },
+  "sacramento|california": {
+    "lat": 38.5816,
+    "lon": -121.4933,
+    "source": "seeded from initial planner"
+  },
+  "dublin|virginia": {
+    "lat": 37.098879,
+    "lon": -80.669696,
+    "source": "seeded from initial planner"
+  },
+  "harrodsburg|kentucky": {
+    "lat": 37.769989,
+    "lon": -84.84675,
+    "source": "seeded from initial planner"
+  },
+  "east falmouth|massachusetts": {
+    "lat": 41.58504,
+    "lon": -70.565174,
+    "source": "seeded from initial planner"
+  },
+  "ballston spa|new york": {
+    "lat": 43.004956,
+    "lon": -73.84858,
+    "source": "seeded from initial planner"
+  },
+  "hillsboro|oregon": {
+    "lat": 45.498401,
+    "lon": -122.956998,
+    "source": "seeded from initial planner"
+  },
+  "farmer city|illinois": {
+    "lat": 40.244689,
+    "lon": -88.663385,
+    "source": "seeded from initial planner"
+  },
+  "great falls|montana": {
+    "lat": 47.509812,
+    "lon": -111.273397,
+    "source": "seeded from initial planner"
+  },
+  "henderson|kentucky": {
+    "lat": 37.836111,
+    "lon": -87.59,
+    "source": "seeded from initial planner"
+  },
+  "longview|washington": {
+    "lat": 46.151354,
+    "lon": -122.963421,
+    "source": "seeded from initial planner"
+  },
+  "summersville|west virginia": {
+    "lat": 38.30089,
+    "lon": -80.835278,
+    "source": "seeded from initial planner"
+  },
+  "minot|north dakota": {
+    "lat": 48.22914,
+    "lon": -101.298476,
+    "source": "seeded from initial planner"
+  },
+  "freeport|illinois": {
+    "lat": 42.299148,
+    "lon": -89.634521,
+    "source": "seeded from initial planner"
+  },
+  "angelica|new york": {
+    "lat": 42.326339,
+    "lon": -77.994671,
+    "source": "seeded from initial planner"
+  },
+  "columbia|missouri": {
+    "lat": 38.938176,
+    "lon": -92.304865,
+    "source": "seeded from initial planner"
+  },
+  "central point|oregon": {
+    "lat": 42.389914,
+    "lon": -122.922235,
+    "source": "seeded from initial planner"
+  },
+  "rhinebeck|new york": {
+    "lat": 41.927206,
+    "lon": -73.888754,
+    "source": "seeded from initial planner"
+  },
+  "greenwich|new york": {
+    "lat": 43.096183,
+    "lon": -73.506658,
+    "source": "seeded from initial planner"
+  },
+  "georgetown|illinois": {
+    "lat": 39.97922,
+    "lon": -87.63648,
+    "source": "seeded from initial planner"
+  },
+  "spencer|iowa": {
+    "lat": 43.145107,
+    "lon": -95.14569,
+    "source": "seeded from initial planner"
+  },
+  "lambertville|new jersey": {
+    "lat": 40.373122,
+    "lon": -74.926605,
+    "source": "seeded from initial planner"
+  },
+  "paso robles|california": {
+    "lat": 35.635248,
+    "lon": -120.670676,
+    "source": "seeded from initial planner"
+  },
+  "cortland|ohio": {
+    "lat": 41.325125,
+    "lon": -80.732745,
+    "source": "seeded from initial planner"
+  },
+  "hiram|maine": {
+    "lat": 43.862217,
+    "lon": -70.853076,
+    "source": "seeded from initial planner"
+  },
+  "fisher|illinois": {
+    "lat": 40.299126,
+    "lon": -88.355991,
+    "source": "seeded from initial planner"
+  },
+  "montpelier|ohio": {
+    "lat": 41.59821,
+    "lon": -84.614703,
+    "source": "seeded from initial planner"
+  },
+  "west fargo|north dakota": {
+    "lat": 46.869523,
+    "lon": -96.895002,
+    "source": "seeded from initial planner"
+  },
+  "sandy creek|new york": {
+    "lat": 43.651681,
+    "lon": -76.126439,
+    "source": "seeded from initial planner"
+  },
+  "wheatland|wyoming": {
+    "lat": 42.049467,
+    "lon": -104.967852,
+    "source": "seeded from initial planner"
+  },
+  "bloomer|wisconsin": {
+    "lat": 45.102477,
+    "lon": -91.489974,
+    "source": "seeded from initial planner"
+  },
+  "plesanton|california": {
+    "lat": 37.665804,
+    "lon": -121.8755,
+    "source": "seeded from initial planner"
+  },
+  "davenport|washington": {
+    "lat": 47.680855,
+    "lon": -118.166657,
+    "source": "seeded from initial planner"
+  },
+  "brainerd|minnesota": {
+    "lat": 46.357219,
+    "lon": -94.201873,
+    "source": "seeded from initial planner"
+  },
+  "melvin|illinois": {
+    "lat": 40.571379,
+    "lon": -88.255078,
+    "source": "seeded from initial planner"
+  },
+  "wahsington|indiana": {
+    "lat": 38.653568,
+    "lon": -87.170656,
+    "source": "seeded from initial planner"
+  },
+  "fallon|nevada": {
+    "lat": 39.470254,
+    "lon": -118.786112,
+    "source": "seeded from initial planner"
+  },
+  "pleasanton|california": {
+    "lat": 37.665804,
+    "lon": -121.8755,
+    "source": "seeded from initial planner"
+  },
+  "livingston|montana": {
+    "lat": 45.654587,
+    "lon": -110.560907,
+    "source": "seeded from initial planner"
+  },
+  "wahoo|nebraska": {
+    "lat": 41.211723,
+    "lon": -96.621946,
+    "source": "seeded from initial planner"
+  },
+  "meshoppen|pennsylvania": {
+    "lat": 41.639163,
+    "lon": -76.015464,
+    "source": "seeded from initial planner"
+  },
+  "anderson|california": {
+    "lat": 40.457432,
+    "lon": -122.328218,
+    "source": "seeded from initial planner"
+  },
+  "placerville|california": {
+    "lat": 38.719479,
+    "lon": -120.804564,
+    "source": "seeded from initial planner"
+  },
+  "del mar|california": {
+    "lat": 32.971474,
+    "lon": -117.237314,
+    "source": "seeded from initial planner"
+  },
+  "danville|indiana": {
+    "lat": 39.762815,
+    "lon": -86.534254,
+    "source": "seeded from initial planner"
+  },
+  "neosho|missouri": {
+    "lat": 36.870634,
+    "lon": -94.386218,
+    "source": "seeded from initial planner"
+  },
+  "mineral wells|texas": {
+    "lat": 32.810283,
+    "lon": -98.063051,
+    "source": "seeded from initial planner"
+  },
+  "covington|georgia": {
+    "lat": 33.5817,
+    "lon": -83.8467,
+    "source": "seeded from initial planner"
+  },
+  "new boston|new hampshire": {
+    "lat": 42.97217,
+    "lon": -71.686402,
+    "source": "seeded from initial planner"
+  },
+  "colfax|iowa": {
+    "lat": 41.678785,
+    "lon": -93.258816,
+    "source": "seeded from initial planner"
+  },
+  "stanley|new mexico": {
+    "lat": 35.12948,
+    "lon": -106.028299,
+    "source": "seeded from initial planner"
+  },
+  "columbia city|indiana": {
+    "lat": 41.161855,
+    "lon": -85.473736,
+    "source": "seeded from initial planner"
+  },
+  "chino|california": {
+    "lat": 34.012222,
+    "lon": -117.688056,
+    "source": "seeded from initial planner"
+  },
+  "harriman|tennessee": {
+    "lat": 35.934785,
+    "lon": -84.515526,
+    "source": "seeded from initial planner"
+  },
+  "logan|utah": {
+    "lat": 41.747025,
+    "lon": -111.822613,
+    "source": "seeded from initial planner"
+  },
+  "fayette|alabama": {
+    "lat": 33.697397,
+    "lon": -87.834647,
+    "source": "seeded from initial planner"
+  },
+  "angels camp|calafornia": {
+    "lat": 38.064011,
+    "lon": -120.55437,
+    "source": "seeded from initial planner"
+  },
+  "hamilton|montana": {
+    "lat": 46.23953,
+    "lon": -114.167869,
+    "source": "seeded from initial planner"
+  },
+  "shelby|north carolina": {
+    "lat": 35.347075,
+    "lon": -81.581573,
+    "source": "seeded from initial planner"
+  },
+  "wooster|ohio": {
+    "lat": 40.809354,
+    "lon": -81.948272,
+    "source": "seeded from initial planner"
+  },
+  "sulphur springs|texas": {
+    "lat": 33.134541,
+    "lon": -95.592161,
+    "source": "seeded from initial planner"
+  },
+  "logansport|indiana": {
+    "lat": 40.760377,
+    "lon": -86.359888,
+    "source": "seeded from initial planner"
+  },
+  "salina|kansas": {
+    "lat": 38.823802,
+    "lon": -97.608787,
+    "source": "seeded from initial planner"
+  },
+  "edmonton|kentucky": {
+    "lat": 36.985197,
+    "lon": -85.592741,
+    "source": "seeded from initial planner"
+  },
+  "brenham|texas": {
+    "lat": 30.17736,
+    "lon": -96.402769,
+    "source": "seeded from initial planner"
+  },
+  "preston|minnesota": {
+    "lat": 43.664132,
+    "lon": -92.096039,
+    "source": "seeded from initial planner"
+  },
+  "chillicothe|missouri": {
+    "lat": 39.796569,
+    "lon": -93.550887,
+    "source": "seeded from initial planner"
+  },
+  "franklin|pennsylvania": {
+    "lat": 41.404775,
+    "lon": -79.83089,
+    "source": "seeded from initial planner"
+  },
+  "macon|missouri": {
+    "lat": 39.748089,
+    "lon": -92.462163,
+    "source": "seeded from initial planner"
+  },
+  "windsor|maine": {
+    "lat": 44.300878,
+    "lon": -69.580587,
+    "source": "seeded from initial planner"
+  },
+  "warrenton|virginia": {
+    "lat": 38.7063,
+    "lon": -77.8159,
+    "source": "seeded from initial planner"
+  },
+  "pomona|california": {
+    "lat": 34.043268,
+    "lon": -117.752086,
+    "source": "seeded from initial planner"
+  },
+  "beaver dam|wisconsin": {
+    "lat": 43.461574,
+    "lon": -88.840681,
+    "source": "seeded from initial planner"
+  },
+  "baton rouge|louisiana": {
+    "lat": 30.450731,
+    "lon": -91.186954,
+    "source": "seeded from initial planner"
+  },
+  "rocky mount|north carolina": {
+    "lat": 35.94265,
+    "lon": -77.760816,
+    "source": "seeded from initial planner"
+  },
+  "hillsboro|ohio": {
+    "lat": 39.167877,
+    "lon": -83.606406,
+    "source": "seeded from initial planner"
+  },
+  "casa grande|arizona": {
+    "lat": 32.892667,
+    "lon": -111.756093,
+    "source": "seeded from initial planner"
+  },
+  "augusta|new jersey": {
+    "lat": 41.145086,
+    "lon": -74.684753,
+    "source": "seeded from initial planner"
+  },
+  "stilwell|oklahoma": {
+    "lat": 35.810703,
+    "lon": -94.631322,
+    "source": "seeded from initial planner"
+  },
+  "laurel|mississippi": {
+    "lat": 31.705444,
+    "lon": -89.131155,
+    "source": "seeded from initial planner"
+  },
+  "winston-salem|north carolina": {
+    "lat": 36.10237,
+    "lon": -80.222798,
+    "source": "seeded from initial planner"
+  },
+  "fort wayne|indiana": {
+    "lat": 41.0716,
+    "lon": -85.1367,
+    "source": "seeded from initial planner"
+  },
+  "alatamont|new york": {
+    "lat": 42.70627,
+    "lon": -74.019339,
+    "source": "seeded from initial planner"
+  },
+  "west salem|wisconsin": {
+    "lat": 43.906253,
+    "lon": -91.089311,
+    "source": "seeded from initial planner"
+  },
+  "cookeville|tennessee": {
+    "lat": 36.174261,
+    "lon": -85.49531,
+    "source": "seeded from initial planner"
+  },
+  "lancaster|ohio": {
+    "lat": 39.718697,
+    "lon": -82.603074,
+    "source": "seeded from initial planner"
+  },
+  "stillwater|oklahoma": {
+    "lat": 36.104349,
+    "lon": -97.060868,
+    "source": "seeded from initial planner"
+  },
+  "fort pierce|florida": {
+    "lat": 27.438233,
+    "lon": -80.443963,
+    "source": "seeded from initial planner"
+  },
+  "somers|connecticut": {
+    "lat": 41.997813,
+    "lon": -72.458266,
+    "source": "seeded from initial planner"
+  },
+  "preston|idaho": {
+    "lat": 42.110917,
+    "lon": -111.856516,
+    "source": "seeded from initial planner"
+  },
+  "brookville|indiana": {
+    "lat": 39.421305,
+    "lon": -84.999423,
+    "source": "seeded from initial planner"
+  },
+  "franklin|indiana": {
+    "lat": 39.485389,
+    "lon": -86.060752,
+    "source": "seeded from initial planner"
+  },
+  "comfort|texas": {
+    "lat": 29.979072,
+    "lon": -98.843772,
+    "source": "seeded from initial planner"
+  },
+  "bremerton|washington": {
+    "lat": 47.601916,
+    "lon": -122.629913,
+    "source": "seeded from initial planner"
+  },
+  "tampa|florida": {
+    "lat": 28.0879,
+    "lon": -82.4593,
+    "source": "seeded from initial planner"
+  },
+  "hicksville|ohio": {
+    "lat": 41.303378,
+    "lon": -84.758852,
+    "source": "seeded from initial planner"
+  },
+  "altamont|new york": {
+    "lat": 42.70627,
+    "lon": -74.019339,
+    "source": "seeded from initial planner"
+  },
+  "shelby|nc": {
+    "lat": 35.347075,
+    "lon": -81.581573,
+    "source": "seeded from initial planner"
+  },
+  "little rock|arkansas": {
+    "lat": 34.748342,
+    "lon": -92.281939,
+    "source": "seeded from initial planner"
+  },
+  "new albany|mississippi": {
+    "lat": 34.485051,
+    "lon": -89.003058,
+    "source": "seeded from initial planner"
+  },
+  "greeley|colorado": {
+    "lat": 40.413968,
+    "lon": -104.704756,
+    "source": "seeded from initial planner"
+  },
+  "troy|pennsylvania": {
+    "lat": 41.77815,
+    "lon": -76.771143,
+    "source": "seeded from initial planner"
+  },
+  "raymond|mississippi": {
+    "lat": 32.23922,
+    "lon": -90.424088,
+    "source": "seeded from initial planner"
+  },
+  "mulberry|arkansas": {
+    "lat": 35.517246,
+    "lon": -93.988505,
+    "source": "seeded from initial planner"
+  },
+  "tucson|arizona": {
+    "lat": 32.213873,
+    "lon": -110.969445,
+    "source": "seeded from initial planner"
+  },
+  "carrollton|georgia": {
+    "lat": 33.5809,
+    "lon": -85.0792,
+    "source": "seeded from initial planner"
+  },
+  "newberry|florida": {
+    "lat": 29.660906,
+    "lon": -82.585188,
+    "source": "seeded from initial planner"
+  },
+  "walterboro|south carolina": {
+    "lat": 32.897367,
+    "lon": -80.679225,
+    "source": "seeded from initial planner"
+  },
+  "brownwood|texas": {
+    "lat": 31.704658,
+    "lon": -98.975164,
+    "source": "seeded from initial planner"
+  },
+  "blountsville|alabama": {
+    "lat": 34.092937,
+    "lon": -86.568628,
+    "source": "seeded from initial planner"
+  },
+  "orangeburg|south carolina": {
+    "lat": 33.502545,
+    "lon": -80.859282,
+    "source": "seeded from initial planner"
+  },
+  "spartanburg|south carolina": {
+    "lat": 34.935211,
+    "lon": -81.965377,
+    "source": "seeded from initial planner"
+  },
+  "mercedes|texas": {
+    "lat": 26.15133,
+    "lon": -97.918503,
+    "source": "seeded from initial planner"
+  }
+}
