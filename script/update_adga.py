@@ -71,7 +71,7 @@ def fetch_rows():
             break
 
     if table is None:
-        dateish = re.compile(r"^\\s*\\d{1,2}/\\d{1,2}/\\d{4}")
+        dateish = re.compile(r"^\s*\d{1,2}/\d{1,2}/\d{4}")
         for t in soup.find_all("table"):
             good = 0
             for tr in t.find_all("tr"):
@@ -88,7 +88,7 @@ def fetch_rows():
         page_text = compact(soup.get_text(" ", strip=True))
         has_heading = "ADGA Sanctioned Show List" in page_text
         has_columns = "Date of Judging" in page_text and "Show Name" in page_text
-        has_known_date = bool(re.search(r"\\b\\d{1,2}/\\d{1,2}/2026\\b", page_text))
+        has_known_date = bool(re.search(r"\b\d{1,2}/\d{1,2}/2026\b", page_text))
         title = compact(soup.title.get_text(" ", strip=True)) if soup.title else "(no title)"
         raise RuntimeError(
             "ADGA sanctioned-show table was not found in the HTML returned to GitHub. "
@@ -106,7 +106,7 @@ def fetch_rows():
 
         p = [parts(c) for c in cells[:7]]
         raw = joined(p[0], " ")
-        if not re.match(r"^\\s*\\d{1,2}/\\d{1,2}/\\d{4}", raw):
+        if not re.match(r"^\s*\d{1,2}/\d{1,2}/\d{4}", raw):
             continue
 
         try:
