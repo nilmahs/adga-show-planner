@@ -154,8 +154,130 @@ footer{padding:0 18px 22px;color:var(--muted);font-size:10px;line-height:1.5}
 .sortcontrol select{font:inherit;font-size:11px;padding:5px 24px 5px 7px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
 @media(max-width:700px){.sidehead{align-items:stretch}.sortcontrol{width:100%}.sortcontrol select{flex:1;min-height:38px}}
 
+
+/* Charcoal + warm cream theme */
+:root{
+  --ink:#2f2f2f !important;
+  --muted:#6e6a63 !important;
+  --accent:#4a4a4a !important;
+  --accent2:#3a3a3a !important;
+  --card:#fffaf0 !important;
+  --line:#d8d0c2 !important;
+}
+body{
+  background:#f4efe5 !important;
+  color:#2f2f2f !important;
+}
+header{
+  background:#2f2f2f !important;
+  color:#f8f1e4 !important;
+  border-bottom:1px solid #4a4a4a !important;
+}
+header p{
+  color:#ded6c8 !important;
+}
+.tool-attribution{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 20px;
+  margin-top:8px;
+  font-size:12px;
+  color:#f2eadc;
+}
+.tool-attribution strong{
+  color:#fffaf0;
+}
+.tool-disclaimer{
+  margin-top:4px;
+  font-size:10px;
+  color:#cfc6b8;
+}
+.toolbar,
+.home-status,
+.page-actions,
+.summary,
+.timeline-wrap{
+  background:#f4efe5 !important;
+}
+.homebar{
+  background:#e8dfd0 !important;
+  border-top-color:#cfc4b4 !important;
+  border-bottom-color:#cfc4b4 !important;
+}
+.homebar-label{
+  color:#2f2f2f !important;
+}
+.homebar-label span{
+  color:#6e6a63 !important;
+}
+.page-actions .secondary-action{
+  border-color:#5a5a5a !important;
+  background:#fffaf0 !important;
+  color:#2f2f2f !important;
+}
+.page-actions .secondary-action:hover{
+  background:#e9e1d4 !important;
+}
+.card,
+.side,
+.tablewrap{
+  background:#fffaf0 !important;
+  border-color:#d8d0c2 !important;
+}
+.sidehead,
+thead th{
+  background:#e6dfd2 !important;
+  color:#2f2f2f !important;
+}
+.showcard:hover,
+tbody tr:hover{
+  background:#eee7db !important;
+}
+.bar{
+  background:#9c978f !important;
+}
+.monthbar:hover .bar,
+.monthbar.active .bar{
+  background:#4a4a4a !important;
+}
+.star.saved{
+  color:#4a4a4a !important;
+}
+.legend{
+  background:#fffaf0ee !important;
+  color:#2f2f2f !important;
+}
+footer{
+  color:#6e6a63 !important;
+}
+input, select{
+  background:#fffdf8 !important;
+  color:#2f2f2f !important;
+  border-color:#cfc4b4 !important;
+}
+button{
+  color:#2f2f2f;
+}
+@media(max-width:700px){
+  .tool-attribution{
+    display:block;
+  }
+  .tool-attribution span{
+    display:block;
+    margin-top:3px;
+  }
+}
+
 </style></head><body>
-<header><h1>ADGA Show Planner</h1><p>Sanctioned shows mapped by date and location · Enter your U.S. ZIP code to calculate distances · Default view shows current and future shows</p></header>
+<header>
+  <h1>ADGA Show Planner</h1>
+  <p>Sanctioned shows mapped by date and location · Enter your U.S. ZIP code to calculate distances · Default view shows current and future shows</p>
+  <div class="tool-attribution">
+    <span><strong>Developed by Hardwicke Farms</strong></span>
+    <span>Show data last updated <strong id="headerUpdated">loading…</strong></span>
+  </div>
+  <div class="tool-disclaimer">Independent planning tool — not affiliated with, sponsored by, endorsed by, or operated by ADGA.</div>
+</header>
 <div class="toolbar">
 <div class="field searchfield"><label for="search">Search</label><input id="search" placeholder="Show, city, judge…"></div>
 <div class="field"><label for="state">State / Province</label><select id="state"><option value="">All states / provinces</option></select></div>
@@ -186,7 +308,7 @@ footer{padding:0 18px 22px;color:var(--muted);font-size:10px;line-height:1.5}
 <div class="tablewrap"><table id="tbl"><thead><tr><th>Save</th><th>Date</th><th>Show</th><th>Location</th><th>State</th><th>Approx. mi</th><th>Judge(s)</th><th>Show Type</th><th>Contact</th><th>Phone</th><th>Email</th></tr></thead><tbody></tbody></table></div>
 <footer>
 <div><strong>Data source:</strong> ADGA Sanctioned Show List. <strong>Planner data last refreshed:</strong> <span id="dataUpdated">loading…</span></div>
-<div style="margin-top:4px">Show information is provided for planning convenience. Please verify show details with ADGA or the show contact before traveling. This independent planning tool is not operated by or affiliated with ADGA.</div>
+<div style="margin-top:4px"><strong>Developed by Hardwicke Farms.</strong> This independent planning tool is not affiliated with, sponsored by, endorsed by, or operated by ADGA. Please verify show details with ADGA or the show contact before traveling.</div>
 <div style="margin-top:4px">Map marker colors represent distance from the selected home ZIP. City coordinates are approximate. Each visitor's Home ZIP and “My Shows” selections are stored only in that visitor's browser.</div>
 </footer>
 <script src="data/shows.js"></script>
@@ -194,7 +316,16 @@ footer{padding:0 18px 22px;color:var(--muted);font-size:10px;line-height:1.5}
 const shows = window.ADGA_SHOWS || [];
 const ADGA_META = window.ADGA_META || {};
 const updatedEl=document.getElementById('dataUpdated');
-if(updatedEl){const raw=ADGA_META.last_updated_utc;if(raw){const d=new Date(raw);updatedEl.textContent=d.toLocaleString([],{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit'});}else{updatedEl.textContent='date unavailable';}}
+const headerUpdatedEl=document.getElementById('headerUpdated');
+if(ADGA_META.last_updated_utc){
+  const d=new Date(ADGA_META.last_updated_utc);
+  const formatted=d.toLocaleString([],{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit'});
+  if(updatedEl) updatedEl.textContent=formatted;
+  if(headerUpdatedEl) headerUpdatedEl.textContent=formatted;
+}else{
+  if(updatedEl) updatedEl.textContent='date unavailable';
+  if(headerUpdatedEl) headerUpdatedEl.textContent='date unavailable';
+}
 let HOME = JSON.parse(localStorage.getItem('adgaHome')||'null');
 const monthNames=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const distanceColors={'≤ 250 mi':'#8f3519','251–500 mi':'#b44a20','501–750 mi':'#d06a32','751–1,000 mi':'#df955e','1,000+ mi':'#e9bd99'};
