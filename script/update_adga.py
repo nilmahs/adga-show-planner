@@ -73,15 +73,44 @@ def fetch_rows():
     return out
 
 def load_existing():
-    s=DATA_JS.read_text(encoding="utf-8")
-    m=re.search(r"window\.ADGA_SHOWS\s*=\s*(\[.*?\]);\s*window\.ADGA_META",s,re.S)
-    mm=re.search(r"window\.ADGA_META\s*=\s*(\{.*?\});\s*$",s,re.S)
-    if not m: raise RuntimeError("Existing data/shows.js could not be read.")
-    rows=json.loads(m.group(1)); meta=json.loads(mm.group(1)) if mm else {}
+    s = DATA_JS.read_text(encoding="utf-8")
+
+    # Parse the JavaScript assignments independently so formatting,
+    # whitespace, or line breaks do not matter.
+    shows_match = re.search(
+        r"window\.ADGA_SHOWS\s*=\s*(\[.*?\])\s*;",
+        s,
+        re.S,
+    )
+    meta_match = re.search(
+        r"window\.ADGA_META\s*=\s*(\{.*?\})\s*;",
+        s,
+        re.S,
+    )
+
+    if not shows_match:
+        preview = s[:300].replace("
+", "\n")
+        raise RuntimeError(
+            "Existing data/shows.js was found, but ADGA_SHOWS could not be parsed. "
+            f"File begins with: {preview}"
+        )
+
+    rows = json.loads(shows_match.group(1))
+    meta = json.loads(meta_match.group(1)) if meta_match else {}
+
+    if not isinstance(rows, list):
+        raise RuntimeError("ADGA_SHOWS in data/shows.js is not a list.")
+
     for x in rows:
         if not x.get("source_key"):
-            x["source_key"]=" | ".join([(x.get("start") or "")[:4],norm(x.get("show_name")),norm(x.get("state_original")),norm(x.get("location"))])
-    return rows,meta
+            x["source_key"] = " | ".join([
+                (x.get("start") or "")[:4],
+                norm(x.get("show_name")),
+                norm(x.get("state_original")),
+                norm(x.get("location")),
+            ])
+    return rows, meta
 
 def load_cache():
     return json.loads(CACHE_JSON.read_text(encoding="utf-8")) if CACHE_JSON.exists() else {}
