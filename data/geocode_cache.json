@@ -1053,5 +1053,95 @@
     "lat": 26.15133,
     "lon": -97.918503,
     "source": "seeded from initial planner"
+  },
+  "perry|oklahoma": {
+    "lat": 36.2907352,
+    "lon": -97.288396,
+    "query": "Perry, Oklahoma, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "fryeburg|maine": {
+    "lat": 44.0165424,
+    "lon": -70.9810769,
+    "query": "Fryeburg, Maine, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "hutchinson|kansas": {
+    "lat": 38.0608444,
+    "lon": -97.9297743,
+    "query": "Hutchinson, Kansas, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "pine bluff|arkansas": {
+    "lat": 34.2228884,
+    "lon": -92.004334,
+    "query": "Pine Bluff, Arkansas, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "paris|tennessee": {
+    "lat": 36.3019461,
+    "lon": -88.3258578,
+    "query": "Paris, Tennessee, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "boonville|california": {
+    "lat": 39.0089365,
+    "lon": -123.3750413,
+    "query": "Boonville, California, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "spokane valley|washington": {
+    "lat": 47.6571104,
+    "lon": -117.2613936,
+    "query": "Spokane Valley, Washington, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "lawrenceville|georgia": {
+    "lat": 33.9566391,
+    "lon": -83.9890066,
+    "query": "Lawrenceville, Georgia, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "dixon|california": {
+    "lat": 38.4454641,
+    "lon": -121.8232958,
+    "query": "Dixon, California, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "pueblo|colorado": {
+    "lat": 38.263995,
+    "lon": -104.6141867,
+    "query": "Pueblo, Colorado, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "manchester|tennessee": {
+    "lat": 35.4832001,
+    "lon": -86.0887296,
+    "query": "Manchester, Tennessee, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "frankfort|kentucky": {
+    "lat": 38.2009055,
+    "lon": -84.8732836,
+    "query": "Frankfort, Kentucky, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "goshen|connecticut": {
+    "lat": 41.8317624,
+    "lon": -73.2251145,
+    "query": "Goshen, Connecticut, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "peotone|illinois": {
+    "lat": 41.3328083,
+    "lon": -87.789758,
+    "query": "Peotone, Illinois, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "fairbury|illinois": {
+    "lat": 40.7472566,
+    "lon": -88.5147789,
+    "query": "Fairbury, Illinois, USA",
+    "source": "OpenStreetMap Nominatim"
   }
 }
