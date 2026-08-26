@@ -89,8 +89,7 @@ def load_existing():
     )
 
     if not shows_match:
-        preview = s[:300].replace("
-", "\n")
+        preview = s[:300].replace("\n", "\\n")
         raise RuntimeError(
             "Existing data/shows.js was found, but ADGA_SHOWS could not be parsed. "
             f"File begins with: {preview}"
