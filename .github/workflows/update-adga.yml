@@ -28,7 +28,7 @@ jobs:
       - name: Install requirements
         run: pip install -r requirements.txt
       - name: Refresh ADGA show archive
-        run: python scripts/update_adga.py
+        run: python script/update_adga.py
       - name: Commit refreshed data if changed
         run: |
           if git diff --quiet -- data/shows.js data/geocode_cache.json; then
