@@ -1143,5 +1143,23 @@
     "lon": -88.5147789,
     "query": "Fairbury, Illinois, USA",
     "source": "OpenStreetMap Nominatim"
+  },
+  "doswell|virginia": {
+    "lat": 37.8601402,
+    "lon": -77.4641492,
+    "query": "Doswell, Virginia, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "bakersfield|california": {
+    "lat": 35.3738712,
+    "lon": -119.019463,
+    "query": "Bakersfield, California, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "oklahoma city|oklahoma": {
+    "lat": 35.4729886,
+    "lon": -97.5170536,
+    "query": "Oklahoma City, Oklahoma, USA",
+    "source": "OpenStreetMap Nominatim"
   }
 }
