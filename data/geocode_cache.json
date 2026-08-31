@@ -1161,5 +1161,23 @@
     "lon": -97.5170536,
     "query": "Oklahoma City, Oklahoma, USA",
     "source": "OpenStreetMap Nominatim"
+  },
+  "washington|indiana": {
+    "lat": 38.5612578,
+    "lon": -86.1179768,
+    "query": "Washington, Indiana, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "sundance|wyoming": {
+    "lat": 44.4064017,
+    "lon": -104.375895,
+    "query": "Sundance, Wyoming, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "salt lake city|utah": {
+    "lat": 40.7596198,
+    "lon": -111.886797,
+    "query": "Salt Lake City, Utah, USA",
+    "source": "OpenStreetMap Nominatim"
   }
 }
