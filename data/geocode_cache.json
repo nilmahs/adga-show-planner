@@ -1179,5 +1179,17 @@
     "lon": -111.886797,
     "query": "Salt Lake City, Utah, USA",
     "source": "OpenStreetMap Nominatim"
+  },
+  "jackson|mississippi": {
+    "lat": 32.2998686,
+    "lon": -90.1830408,
+    "query": "Jackson, Mississippi, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "tulsa|oklahoma": {
+    "lat": 36.1563122,
+    "lon": -95.9927516,
+    "query": "Tulsa, Oklahoma, USA",
+    "source": "OpenStreetMap Nominatim"
   }
 }
