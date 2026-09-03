@@ -1191,5 +1191,11 @@
     "lon": -95.9927516,
     "query": "Tulsa, Oklahoma, USA",
     "source": "OpenStreetMap Nominatim"
+  },
+  "fresno|california": {
+    "lat": 36.7394421,
+    "lon": -119.78483,
+    "query": "Fresno, California, USA",
+    "source": "OpenStreetMap Nominatim"
   }
 }
