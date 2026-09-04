@@ -1197,5 +1197,11 @@
     "lon": -119.78483,
     "query": "Fresno, California, USA",
     "source": "OpenStreetMap Nominatim"
+  },
+  "topsfield|massachusetts": {
+    "lat": 42.6390841,
+    "lon": -70.9507469,
+    "query": "Topsfield, Massachusetts, USA",
+    "source": "OpenStreetMap Nominatim"
   }
 }
