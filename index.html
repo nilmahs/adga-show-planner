@@ -114,25 +114,43 @@ button{
 }
 
 
-/* Refined header information hierarchy */
-header .header-primary{
-  margin:5px 0 2px !important;
+
+/* Compact header hierarchy — actual header elements */
+header > p{
+  margin:6px 0 4px !important;
   font-size:13px !important;
   line-height:1.35 !important;
   font-weight:500 !important;
-  letter-spacing:0 !important;
   color:#f4f1e8 !important;
+  opacity:1 !important;
 }
-header .header-primary strong{
+header .tool-attribution{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px 14px;
+  margin:0 0 2px !important;
+  font-size:12px !important;
+  line-height:1.35 !important;
+  font-weight:500 !important;
+  color:#ece9df !important;
+}
+header .tool-attribution strong{
   font-weight:700 !important;
+  color:#fffdf7 !important;
 }
-header .header-disclaimer{
+header .tool-disclaimer{
   margin:1px 0 0 !important;
   font-size:9px !important;
   line-height:1.25 !important;
   font-weight:400 !important;
-  color:#d4d6d0 !important;
-  opacity:.82 !important;
+  color:#cfd2cc !important;
+  opacity:.78 !important;
+}
+@media(max-width:700px){
+  header > p{font-size:12px !important;}
+  header .tool-attribution{font-size:11px !important;display:block;}
+  header .tool-attribution span{display:block;margin-top:2px;}
+  header .tool-disclaimer{font-size:8px !important;}
 }
 
 </style></head><body>
@@ -206,8 +224,8 @@ const map=L.map('map',{
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
 const markers=L.layerGroup().addTo(map);
 const homeIcon=L.divIcon({className:'',html:'<div style="font-size:25px;filter:drop-shadow(0 1px 2px #fff)">★</div>',iconSize:[28,28],iconAnchor:[14,14]});
-let homeMarker=null,ring250=null,ring500=null;
-function updateHomeGraphics(){const status=document.getElementById('homeStatus'),dist=document.getElementById('distance');if(!HOME){status.textContent='Enter your home ZIP to calculate show distances.';document.getElementById('zip').value='';dist.disabled=true;dist.value='';state.distance='';return;}if(!homeMarker){homeMarker=L.marker([HOME.lat,HOME.lon],{icon:homeIcon,zIndexOffset:1000}).addTo(map);ring250=L.circle([HOME.lat,HOME.lon],{radius:250*1609.344,color:'#5c6159',weight:2,fill:false,dashArray:'6,5',opacity:.8}).addTo(map);ring500=L.circle([HOME.lat,HOME.lon],{radius:500*1609.344,color:'#8b9187',weight:2,fill:false,dashArray:'6,5',opacity:.75}).addTo(map);}homeMarker.setLatLng([HOME.lat,HOME.lon]).bindPopup(`<span class="homeLabel">Home base</span><br>${esc(HOME.label)} (${esc(HOME.zip)})`);ring250.setLatLng([HOME.lat,HOME.lon]);ring500.setLatLng([HOME.lat,HOME.lon]);status.textContent='Home base: '+HOME.label+' ('+HOME.zip+') · distances are approximate straight-line miles';document.getElementById('zip').value=HOME.zip||'';dist.disabled=false;if(dist.options[0])dist.options[0].text='Any distance';}
+let homeMarker=null,distanceRings=[];
+function updateHomeGraphics(){const status=document.getElementById('homeStatus'),dist=document.getElementById('distance');if(!HOME){status.textContent='Enter your home ZIP to calculate show distances.';document.getElementById('zip').value='';dist.disabled=true;dist.value='';state.distance='';return;}if(!homeMarker){homeMarker=L.marker([HOME.lat,HOME.lon],{icon:homeIcon,zIndexOffset:1000}).addTo(map);const ringDefs=[{m:250,c:'#5c6159',o:.82},{m:500,c:'#8b9187',o:.78},{m:750,c:'#747b72',o:.74},{m:1000,c:'#989e94',o:.70},{m:1250,c:'#6f756d',o:.66},{m:1500,c:'#a8ada4',o:.62}];distanceRings=ringDefs.map(r=>L.circle([HOME.lat,HOME.lon],{radius:r.m*1609.344,color:r.c,weight:2,fill:false,dashArray:'6,5',opacity:r.o}).addTo(map));}homeMarker.setLatLng([HOME.lat,HOME.lon]).bindPopup(`<span class="homeLabel">Home base</span><br>${esc(HOME.label)} (${esc(HOME.zip)})`);distanceRings.forEach(r=>r.setLatLng([HOME.lat,HOME.lon]));status.textContent='Home base: '+HOME.label+' ('+HOME.zip+') · distances are approximate straight-line miles';document.getElementById('zip').value=HOME.zip||'';dist.disabled=false;if(dist.options[0])dist.options[0].text='Any distance';}
 function miles(lat1,lon1,lat2,lon2){const R=3958.7613,toRad=x=>x*Math.PI/180;const dLat=toRad(lat2-lat1),dLon=toRad(lon2-lon1);const a=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
 function bandFor(d){if(d<=250)return '≤ 250 mi';if(d<=500)return '251–500 mi';if(d<=750)return '501–750 mi';if(d<=1000)return '751–1,000 mi';return '1,000+ mi';}
 function recalcDistances(){shows.forEach(x=>{if(!HOME||x.lat==null||x.lon==null){x.distance=null;x.distance_band='';return;}x.distance=Math.round(miles(HOME.lat,HOME.lon,x.lat,x.lon));x.distance_band=bandFor(x.distance);});}
