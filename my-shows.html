@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My ADGA Shows</title>
+<script src="data/shows.js"></script>
+<style>
+:root{--ink:#30352f;--muted:#6f746c;--sage:#5c6159;--deep:#454b44;--cream:#f2f0e8;--card:#fbf8f0;--line:#d7d5ca}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+.wrap{max-width:1200px;margin:0 auto;padding:28px}
+header{border-bottom:2px solid var(--sage);padding-bottom:14px;margin-bottom:18px}
+h1{margin:0 0 5px;font-family:Georgia,serif;font-size:30px;color:var(--deep)}
+.sub{font-size:13px;color:var(--muted)}
+.actions{display:flex;gap:8px;margin:0 0 18px}
+button,a.button{appearance:none;border:1px solid var(--sage);background:var(--sage);color:white;border-radius:6px;padding:9px 14px;font-size:13px;text-decoration:none;cursor:pointer}
+a.button.secondary{background:transparent;color:var(--deep)}
+.empty{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:22px}
+table{width:100%;border-collapse:collapse;background:var(--card)}
+th{text-align:left;background:#e8e9e2;padding:9px 8px;border-bottom:1px solid #aeb3aa;font-size:10px;text-transform:uppercase;letter-spacing:.03em}
+td{padding:9px 8px;border-bottom:1px solid #dddcd4;vertical-align:top;font-size:12px;line-height:1.35}
+tr{break-inside:avoid}.showname{font-weight:700}
+.note,.footer{font-size:9px;line-height:1.35;color:var(--muted)}.note{margin:0 0 14px}.footer{margin-top:14px}
+@media(max-width:800px){.wrap{padding:16px}th,td{padding:7px 5px}}
+@media print{
+  body{background:white}.wrap{max-width:none;padding:0}.actions{display:none}
+  header{margin-bottom:10px}h1{font-size:23px}.sub{font-size:10px}.note{font-size:8px}
+  th{font-size:8px;padding:5px 4px}td{font-size:9px;padding:5px 4px}.footer{font-size:8px}
+  @page{size:landscape;margin:.4in}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>My ADGA Shows</h1>
+    <div class="sub" id="summary">Loading saved shows…</div>
+  </header>
+
+  <div class="actions">
+    <button type="button" onclick="window.print()">Print this page</button>
+    <a class="button secondary" href="./">Back to Show Planner</a>
+  </div>
+
+  <div class="note">
+    Personal planning list generated from the Hardwicke Farms ADGA Show Planner.
+    Independent planning tool — not affiliated with, sponsored by, endorsed by, or operated by ADGA.
+    Verify show details before traveling.
+  </div>
+
+  <div id="content"></div>
+  <div class="footer" id="footer"></div>
+</div>
+
+<script>
+const shows=window.ADGA_SHOWS||[];
+const saved=new Set(JSON.parse(localStorage.getItem('adgaSavedShows')||'[]'));
+const HOME=JSON.parse(localStorage.getItem('adgaHome')||'null');
+
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmtDate(start,end){
+  if(!start)return '';
+  const a=new Date(start+'T12:00:00');
+  if(!end||end===start)return a.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
+  const b=new Date(end+'T12:00:00');
+  return a.toLocaleDateString(undefined,{month:'short',day:'numeric'})+'–'+b.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
+}
+function miles(lat1,lon1,lat2,lon2){
+  const R=3958.7613,toRad=x=>x*Math.PI/180,p1=toRad(lat1),p2=toRad(lat2),dp=toRad(lat2-lat1),dl=toRad(lon2-lon1);
+  const a=Math.sin(dp/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2;
+  return 2*R*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+function distanceFor(x){
+  if(!HOME||x.lat==null||x.lon==null)return null;
+  return Math.round(miles(HOME.lat,HOME.lon,+x.lat,+x.lon));
+}
+
+const mine=shows.filter(x=>saved.has(x.id)).sort((a,b)=>String(a.start).localeCompare(String(b.start))||String(a.show_name).localeCompare(String(b.show_name)));
+const homeText=HOME?`${HOME.label} (${HOME.zip})`:'Home ZIP not set';
+document.getElementById('summary').textContent=`${mine.length} saved show${mine.length===1?'':'s'} · Home: ${homeText}`;
+
+const content=document.getElementById('content');
+if(!mine.length){
+  content.innerHTML='<div class="empty"><strong>No shows are saved yet.</strong><br>Return to the planner and click the star beside a show to add it to My Shows.</div>';
+}else{
+  const rows=mine.map(x=>{
+    const d=distanceFor(x);
+    const contact=[x.contact_name,x.contact_phone,x.contact_email].filter(Boolean).map(esc).join('<br>');
+    return `<tr>
+      <td>${esc(fmtDate(x.start,x.end))}</td>
+      <td><span class="showname">${esc(x.show_name)}</span></td>
+      <td>${esc(x.location)}${x.state_original?', '+esc(x.state_original):''}</td>
+      <td>${d!==null?'~'+d.toLocaleString()+' mi':'—'}</td>
+      <td>${esc(x.judges)}</td>
+      <td>${esc(x.show_type)}</td>
+      <td>${contact||'—'}</td>
+    </tr>`;
+  }).join('');
+  content.innerHTML=`<table><thead><tr><th>Date</th><th>Show</th><th>Location</th><th>Distance</th><th>Judge(s)</th><th>Show Type</th><th>Contact</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+document.getElementById('footer').textContent='Page prepared '+new Date().toLocaleString();
+</script>
+</body>
+</html>
