@@ -153,6 +153,38 @@ header .tool-disclaimer{
   header .tool-disclaimer{font-size:8px !important;}
 }
 
+
+.page-actions a.secondary-action{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  box-sizing:border-box;
+}
+
+
+.page-actions a.secondary-action.print-action{
+  font:inherit !important;
+  font-size:inherit !important;
+  font-weight:inherit !important;
+  line-height:normal !important;
+  height:auto !important;
+  min-height:0 !important;
+  padding:8px 12px !important;
+  margin:0 !important;
+  border:1px solid #777d73 !important;
+  border-radius:6px !important;
+  background:#f8f6ef !important;
+  color:#3d433c !important;
+  text-decoration:none !important;
+  cursor:pointer !important;
+  box-shadow:none !important;
+  vertical-align:middle !important;
+}
+.page-actions a.secondary-action.print-action:hover{
+  background:#e9ece4 !important;
+}
+
 </style></head><body>
 <header>
   <h1>ADGA Show Planner</h1>
@@ -177,7 +209,7 @@ header .tool-disclaimer{
 
 <div class="page-actions">
   <button id="savedOnly" class="secondary-action">☆ My Shows</button>
-  <button id="printMyShows" class="secondary-action print-action">Print My Shows</button>
+  <a class="secondary-action print-action" href="my-shows.html" target="_blank" rel="noopener">Print My Shows</a>
   <button id="reset" class="secondary-action">Reset filters</button>
 </div>
 <div class="summary"><div class="card"><div class="metric" id="nshows">—</div><div class="label">Shows in view</div></div><div class="card"><div class="metric" id="nstates">—</div><div class="label">States / provinces</div></div><div class="card"><div class="metric" id="nearest">—</div><div class="label">Nearest show from home</div></div><div class="card"><div class="metric" id="upcoming">—</div><div class="label">Upcoming in view</div></div></div>
@@ -303,7 +335,6 @@ function printMyShows(){
 
 function resetFilters(){state={search:'',state:'',month:'',dateFrom:TODAY,dateTo:'',distance:'',type:'',savedOnly:false};['search','state','month','distance','type','dateTo'].forEach(id=>document.getElementById(id).value='');document.getElementById('dateFrom').value=TODAY;document.getElementById('savedOnly').textContent='☆ My Shows';render();map.setView(LOWER48_CENTER,LOWER48_ZOOM)}
 ['search','state','month','dateFrom','dateTo','distance','type'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',e=>{state[id]=e.target.value;render()}));
-document.getElementById('printMyShows').onclick=printMyShows;
 document.getElementById('savedOnly').onclick=()=>{state.savedOnly=!state.savedOnly;document.getElementById('savedOnly').textContent=state.savedOnly?'★ My Shows':'☆ My Shows';render()};
 document.getElementById('reset').onclick=resetFilters;
 document.getElementById('setZip').onclick=setHomeZip;
