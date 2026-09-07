@@ -185,6 +185,39 @@ header .tool-disclaimer{
   background:#e9ece4 !important;
 }
 
+
+/* Keep My Shows / Print My Shows / Reset Filters visually identical and level */
+.page-actions{
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  flex-wrap:wrap !important;
+}
+.page-actions > .secondary-action{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  box-sizing:border-box !important;
+  height:38px !important;
+  min-height:38px !important;
+  padding:0 14px !important;
+  margin:0 !important;
+  border:1px solid #777d73 !important;
+  border-radius:6px !important;
+  background:#f8f6ef !important;
+  color:#3d433c !important;
+  font-family:inherit !important;
+  font-size:13px !important;
+  font-weight:600 !important;
+  line-height:1 !important;
+  text-decoration:none !important;
+  vertical-align:middle !important;
+  box-shadow:none !important;
+}
+.page-actions > .secondary-action:hover{
+  background:#e9ece4 !important;
+}
+
 </style></head><body>
 <header>
   <h1>ADGA Show Planner</h1>
@@ -209,7 +242,7 @@ header .tool-disclaimer{
 
 <div class="page-actions">
   <button id="savedOnly" class="secondary-action">☆ My Shows</button>
-  <a class="secondary-action print-action" href="my-shows.html" target="_blank" rel="noopener">Print My Shows</a>
+  <a id="printMyShowsLink" class="secondary-action print-action" href="my-shows.html" target="_blank" rel="noopener">Print My Shows</a>
   <button id="reset" class="secondary-action">Reset filters</button>
 </div>
 <div class="summary"><div class="card"><div class="metric" id="nshows">—</div><div class="label">Shows in view</div></div><div class="card"><div class="metric" id="nstates">—</div><div class="label">States / provinces</div></div><div class="card"><div class="metric" id="nearest">—</div><div class="label">Nearest show from home</div></div><div class="card"><div class="metric" id="upcoming">—</div><div class="label">Upcoming in view</div></div></div>
@@ -277,7 +310,7 @@ function filtered(){return shows.filter(x=>{
  return (!q||hay.includes(q))&&(!state.state||x.state===state.state)&&(!state.month||x.month===+state.month)&&inDate&&(!state.distance||(x.distance!==null&&x.distance<=Number(state.distance)))&&(!state.type||x.show_type.includes(state.type))&&(!state.savedOnly||saved.has(x.id));
 })}
 function popup(x){return `<div class="popup-title">${esc(x.show_name)}</div><div class="popup-meta"><b>${esc(fmtDate(x.start,x.end))}</b><br>${esc(x.location)}, ${esc(x.state_original)}<br>${x.distance!==null?`<span class="dist">~${x.distance.toLocaleString()} mi straight-line from ${esc(HOME.label)}</span><br>`:'<span class="tiny">Enter a home ZIP to calculate distance</span><br>'}${x.judges?`Judge(s): ${esc(x.judges)}<br>`:''}${x.show_type?`Show: ${esc(x.show_type)}<br>`:''}${x.contact_name?`Contact: ${esc(x.contact_name)}`:''}</div>`}
-function render(){const f=filtered();
+function render(){updatePrintMyShowsLink();const f=filtered();
  document.getElementById('nshows').textContent=f.length.toLocaleString();
  document.getElementById('nstates').textContent=new Set(f.map(x=>x.state)).size;
  const d=f.filter(x=>x.distance!==null).map(x=>x.distance);document.getElementById('nearest').textContent=d.length?Math.min(...d).toLocaleString()+' mi':'—';
@@ -294,43 +327,14 @@ function renderTable(f){document.querySelector('#tbl tbody').innerHTML=[...f].so
 function renderTimeline(f){let counts={};for(let m=1;m<=12;m++)counts[m]=0;f.forEach(x=>{if(x.month)counts[x.month]++});let max=Math.max(...Object.values(counts),1);document.getElementById('timeline').innerHTML=Object.entries(counts).map(([m,c])=>`<div class="monthbar ${state.month==m?'active':''}" onclick="setMonth(${m})"><div class="count">${c}</div><div class="bar" style="height:${Math.max(2,c/max*55)}px"></div><div class="mon">${monthNames[m]}</div></div>`).join('')}
 function setMonth(m){state.month=(state.month==m?'':String(m));document.getElementById('month').value=state.month;render()}
 
-function printMyShows(){
-  const mine=[...shows].filter(x=>saved.has(x.id)).sort((a,b)=>a.start.localeCompare(b.start)||a.show_name.localeCompare(b.show_name));
-  if(!mine.length){alert('You have not saved any shows yet. Click the star beside a show to add it to My Shows.');return;}
-  const homeText=HOME?`${esc(HOME.label)} (${esc(HOME.zip)})`:'Home ZIP not set';
-  const rows=mine.map(x=>`<tr>
-    <td>${esc(fmtDate(x.start,x.end))}</td>
-    <td><strong>${esc(x.show_name)}</strong></td>
-    <td>${esc(x.location)}, ${esc(x.state_original)}</td>
-    <td>${x.distance!==null?'~'+x.distance.toLocaleString()+' mi':'—'}</td>
-    <td>${esc(x.judges)}</td>
-    <td>${esc(x.show_type)}</td>
-    <td>${esc(x.contact_name)}${x.contact_phone?'<br>'+esc(x.contact_phone):''}${x.contact_email?'<br>'+esc(x.contact_email):''}</td>
-  </tr>`).join('');
-  const w=window.open('','_blank','noopener,noreferrer');
-  if(!w){alert('Your browser blocked the print window. Allow pop-ups for this page and try again.');return;}
-  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>My ADGA Shows</title>
-  <style>
-  body{font-family:Arial,sans-serif;color:#30352f;margin:28px;font-size:11px}
-  h1{font-family:Georgia,serif;margin:0;color:#4d534c;font-size:24px}
-  .sub{margin:5px 0 16px;color:#666d64}
-  .note{font-size:9px;color:#73786f;margin:0 0 16px}
-  table{width:100%;border-collapse:collapse}
-  th{text-align:left;background:#e8e9e2;color:#30352f;padding:7px 6px;border-bottom:1px solid #aeb3aa;font-size:9px;text-transform:uppercase}
-  td{padding:7px 6px;border-bottom:1px solid #dddcd4;vertical-align:top}
-  tr{break-inside:avoid}
-  .footer{margin-top:14px;font-size:9px;color:#73786f}
-  @page{size:landscape;margin:.45in}
-  </style></head><body>
-  <h1>My ADGA Shows</h1>
-  <div class="sub">${mine.length} saved show${mine.length===1?'':'s'} · Home: ${homeText}</div>
-  <div class="note">Personal planning list generated from the Hardwicke Farms ADGA Show Planner. Independent planning tool — not affiliated with, sponsored by, endorsed by, or operated by ADGA. Verify show details before traveling.</div>
-  <table><thead><tr><th>Date</th><th>Show</th><th>Location</th><th>Distance</th><th>Judge(s)</th><th>Show Type</th><th>Contact</th></tr></thead><tbody>${rows}</tbody></table>
-  <div class="footer">Printed ${new Date().toLocaleString()}</div>
-  </body></html>`);
-  w.document.close();
-  w.focus();
-  setTimeout(()=>w.print(),250);
+
+function updatePrintMyShowsLink(){
+  const link=document.getElementById('printMyShowsLink');
+  if(!link)return;
+  const params=new URLSearchParams();
+  params.set('ids',[...saved].map(String).join(','));
+  if(HOME)params.set('home',JSON.stringify(HOME));
+  link.href='my-shows.html?'+params.toString();
 }
 
 function resetFilters(){state={search:'',state:'',month:'',dateFrom:TODAY,dateTo:'',distance:'',type:'',savedOnly:false};['search','state','month','distance','type','dateTo'].forEach(id=>document.getElementById(id).value='');document.getElementById('dateFrom').value=TODAY;document.getElementById('savedOnly').textContent='☆ My Shows';render();map.setView(LOWER48_CENTER,LOWER48_ZOOM)}
