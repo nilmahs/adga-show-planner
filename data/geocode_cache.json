@@ -1203,5 +1203,23 @@
     "lon": -70.9507469,
     "query": "Topsfield, Massachusetts, USA",
     "source": "OpenStreetMap Nominatim"
+  },
+  "phoenix|arizona": {
+    "lat": 33.4484367,
+    "lon": -112.074141,
+    "query": "Phoenix, Arizona, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "winston salem|north carolina": {
+    "lat": 36.0998131,
+    "lon": -80.2440518,
+    "query": "Winston Salem, North Carolina, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "mumford|new york": {
+    "lat": 42.9923976,
+    "lon": -77.8602945,
+    "query": "Mumford, New York, USA",
+    "source": "OpenStreetMap Nominatim"
   }
 }
