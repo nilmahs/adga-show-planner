@@ -1221,5 +1221,17 @@
     "lon": -77.8602945,
     "query": "Mumford, New York, USA",
     "source": "OpenStreetMap Nominatim"
+  },
+  "du quoin|illinois": {
+    "lat": 38.0114393,
+    "lon": -89.2361935,
+    "query": "Du Quoin, Illinois, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "fort payne|alabama": {
+    "lat": 34.4442547,
+    "lon": -85.7196893,
+    "query": "Fort Payne, Alabama, USA",
+    "source": "OpenStreetMap Nominatim"
   }
 }
