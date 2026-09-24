@@ -1233,5 +1233,11 @@
     "lon": -85.7196893,
     "query": "Fort Payne, Alabama, USA",
     "source": "OpenStreetMap Nominatim"
+  },
+  "fort smith|arkansas": {
+    "lat": 35.3880338,
+    "lon": -94.4265011,
+    "query": "Fort Smith, Arkansas, USA",
+    "source": "OpenStreetMap Nominatim"
   }
 }
