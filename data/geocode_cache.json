@@ -1239,5 +1239,35 @@
     "lon": -94.4265011,
     "query": "Fort Smith, Arkansas, USA",
     "source": "OpenStreetMap Nominatim"
+  },
+  "phoenix|az": {
+    "lat": 33.4484367,
+    "lon": -112.074141,
+    "query": "PHOENIX, AZ, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "ag center dr laurens|sc": {
+    "lat": null,
+    "lon": null,
+    "query": "Ag Center Dr Laurens, SC, USA",
+    "source": "geocoding failed"
+  },
+  "sydney washer rd dover|fl": {
+    "lat": null,
+    "lon": null,
+    "query": "SYDNEY WASHER RD DOVER, FL, USA",
+    "source": "geocoding failed"
+  },
+  "dothan|al": {
+    "lat": 31.2237285,
+    "lon": -85.3934375,
+    "query": "DOTHAN, AL, USA",
+    "source": "OpenStreetMap Nominatim"
+  },
+  "louisville|ky": {
+    "lat": 38.2542376,
+    "lon": -85.759407,
+    "query": "LOUISVILLE, KY, USA",
+    "source": "OpenStreetMap Nominatim"
   }
 }
