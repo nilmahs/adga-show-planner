@@ -218,6 +218,22 @@ header .tool-disclaimer{
   background:#e9ece4 !important;
 }
 
+
+/* Desktop usability: let the document scroll rather than nesting vertical scrollbars. */
+@media (min-width:1051px){
+  #map{height:760px}
+  .side{height:auto;min-height:760px;overflow:visible}
+  .showlist{overflow:visible;flex:none}
+  .tablewrap{max-height:none;overflow-x:auto;overflow-y:visible}
+  thead th{position:static}
+}
+/* On tablet, preserve stacked layout but avoid the second vertical scroll area. */
+@media (min-width:701px) and (max-width:1050px){
+  .side{height:auto;overflow:visible}
+  .showlist{overflow:visible}
+  .tablewrap{max-height:none;overflow-x:auto;overflow-y:visible}
+  thead th{position:static}
+}
 </style></head><body>
 <header>
   <h1>ADGA Show Planner</h1>
@@ -281,6 +297,7 @@ const LOWER48_CENTER=[38.4,-96.5];
 const LOWER48_ZOOM=4;
 const map=L.map('map',{
   zoomControl:true,
+  scrollWheelZoom:false,
   minZoom:LOWER48_ZOOM,
   maxBounds:LOWER48_BOUNDS,
   maxBoundsViscosity:1.0,
