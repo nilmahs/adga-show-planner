@@ -15,56 +15,40 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  diagnose-ical:
+  test-duplicate-fix:
     if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - name: Diagnose ADGA iCalendar feed (test branch only)
-        if: github.ref != 'refs/heads/main'
+      - name: Checkout test branch
+        uses: actions/checkout@v6
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: "pip"
+      - name: Install requirements
+        run: pip install -r requirements.txt
+      - name: Test show import without publishing
+        run: python script/update_adga.py
+      - name: Verify Arizona duplicate removed and original ID retained
         run: |
           python - <<'PY'
-          import re
-          import urllib.request
-          from collections import Counter
-          from datetime import datetime
-          url = "https://adga.org/events/month/?shortcode=d0fa1991&ical=1"
-          request = urllib.request.Request(url, headers={"User-Agent":"Mozilla/5.0","Accept":"text/calendar, */*"})
-          with urllib.request.urlopen(request, timeout=60) as response:
-              raw = response.read(10000000)
-              print("HTTP:", response.status)
-              print("Content-Type:", response.headers.get("Content-Type"))
-              print("Final URL:", response.geturl())
-              print("Bytes:", len(raw))
-          body = raw.decode("utf-8-sig", errors="replace")
-          body = re.sub(r"\r?\n[ \t]", "", body)
-          print("Calendar header found:", "BEGIN:VCALENDAR" in body)
-          events = re.findall(r"BEGIN:VEVENT(.*?)END:VEVENT", body, flags=re.S)
-          print("VEVENT count:", len(events))
-          if not events:
-              print("Response preview:", repr(body[:300]))
-              raise SystemExit("No VEVENT records returned")
-          coverage = Counter()
-          dates = []
-          for event in events:
-              for line in event.splitlines():
-                  key = line.split(":", 1)[0].split(";", 1)[0].upper()
-                  if key in ("DTSTART","DTEND","SUMMARY","LOCATION","DESCRIPTION","URL","UID"):
-                      coverage[key] += 1
-                  if key == "DTSTART":
-                      match = re.search(r":(\d{8})", line)
-                      if match:
-                          dates.append(datetime.strptime(match.group(1), "%Y%m%d").date())
-          print("Field coverage:", dict(coverage))
-          if dates:
-              print("Earliest:", min(dates).isoformat())
-              print("Latest:", max(dates).isoformat())
-              print("Months:", dict(sorted(Counter(d.strftime("%Y-%m") for d in dates).items())))
-          print("First 5 summaries:")
-          for event in events[:5]:
-              line = next((x for x in event.splitlines() if x.startswith("SUMMARY:")), "")
-              print(" -", line[8:150])
+          import json, re
+          from pathlib import Path
+          data = Path("data/shows.js").read_text(encoding="utf-8")
+          shows = json.loads(re.search(r"window\.ADGA_SHOWS\s*=\s*(\[.*?\])\s*;", data, re.S).group(1))
+          def name(s):
+              return re.sub(r"[^a-z0-9]", "", s.lower().replace("’", "'"))
+          matching = [x for x in shows if x.get("start") == "2026-11-01"
+                      and x.get("location", "").lower() == "phoenix"
+                      and name(x.get("show_name", "")) == "arizonastategoatbreedersassociation"]
+          print("Arizona Phoenix November 1 records:", len(matching))
+          print("Matching IDs:", [x.get("id") for x in matching])
+          print("Total archived shows:", len(shows))
+          assert len(matching) == 1, "Arizona show still duplicated"
+          assert matching[0]["id"] == 334, "Original saved-show ID was not retained"
+          print("PASS: duplicate removed; original ID 334 preserved.")
           PY
-
 
   update:
     if: github.ref == 'refs/heads/main'
