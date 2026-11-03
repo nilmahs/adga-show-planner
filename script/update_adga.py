@@ -230,22 +230,68 @@ def geocode(loc,st,cache):
     cache[key]={"lat":None,"lon":None,"query":q,"source":"geocoding failed"}
     return None,None
 
+def canonical_show_name(value):
+    """Normalize punctuation without collapsing genuinely different show names."""
+    import unicodedata
+    value = unicodedata.normalize("NFKD", value or "")
+    value = value.replace("’", "'").replace("‘", "'").replace("`", "'")
+    return re.sub(r"[^a-z0-9]+", "", value.lower())
+
+
+def canonical_state(value):
+    states = {"alabama":"al","alaska":"ak","arizona":"az","arkansas":"ar",
+      "california":"ca","colorado":"co","connecticut":"ct","delaware":"de",
+      "florida":"fl","georgia":"ga","hawaii":"hi","idaho":"id","illinois":"il",
+      "indiana":"in","iowa":"ia","kansas":"ks","kentucky":"ky","louisiana":"la",
+      "maine":"me","maryland":"md","massachusetts":"ma","michigan":"mi",
+      "minnesota":"mn","mississippi":"ms","missouri":"mo","montana":"mt",
+      "nebraska":"ne","nevada":"nv","new hampshire":"nh","new jersey":"nj",
+      "new mexico":"nm","new york":"ny","north carolina":"nc","north dakota":"nd",
+      "ohio":"oh","oklahoma":"ok","oregon":"or","pennsylvania":"pa",
+      "rhode island":"ri","south carolina":"sc","south dakota":"sd",
+      "tennessee":"tn","texas":"tx","utah":"ut","vermont":"vt",
+      "virginia":"va","washington":"wa","west virginia":"wv",
+      "wisconsin":"wi","wyoming":"wy"}
+    key = norm(value).replace(".", "")
+    return states.get(key, key)
+
+
+def show_identity(row):
+    """Same date, name, city and state; judge/contact edits do not split records."""
+    return (row.get("start",""), canonical_show_name(row.get("show_name","")),
+            norm(row.get("location","")), canonical_state(row.get("state") or row.get("state_original")))
+
+
 def merge(existing,current,cache):
-    by={x["source_key"]:x for x in existing}
+    # Keep the oldest stable ID when old and new ADGA source formats overlap.
+    # Never merge shows solely by name: date, city, and state must all match.
+    by_identity = {}
+    for row in sorted(existing, key=lambda r:int(r.get("id",0))):
+        identity = show_identity(row)
+        if identity in by_identity:
+            prior = by_identity[identity]
+            # Retain original ID and geographic data; prefer updated details.
+            by_identity[identity] = {**prior, **row, "id":prior["id"],
+                "lat":prior.get("lat") if prior.get("lat") is not None else row.get("lat"),
+                "lon":prior.get("lon") if prior.get("lon") is not None else row.get("lon")}
+        else:
+            by_identity[identity] = dict(row)
     next_id=max([int(x.get("id",-1)) for x in existing]+[-1])+1
     added=updated=0
     for inc in current:
-        old=by.get(inc["source_key"])
+        identity=show_identity(inc)
+        old=by_identity.get(identity)
         if old:
-            inc["id"]=old["id"]; inc["lat"]=old.get("lat"); inc["lon"]=old.get("lon")
+            inc["id"]=old["id"]
+            inc["lat"]=old.get("lat"); inc["lon"]=old.get("lon")
             if inc["lat"] is None or inc["lon"] is None:
                 inc["lat"],inc["lon"]=geocode(inc["location"],inc["state_original"],cache)
-            by[inc["source_key"]]={**old,**inc}; updated+=1
+            by_identity[identity]={**old,**inc}; updated+=1
         else:
             inc["id"]=next_id; next_id+=1
             inc["lat"],inc["lon"]=geocode(inc["location"],inc["state_original"],cache)
-            by[inc["source_key"]]=inc; added+=1
-    rows=list(by.values())
+            by_identity[identity]=inc; added+=1
+    rows=list(by_identity.values())
     for x in rows: x["distance"]=None; x["distance_band"]=""
     rows.sort(key=lambda x:(x.get("start",""),x.get("show_name",""),int(x.get("id",0))))
     return rows,added,updated
