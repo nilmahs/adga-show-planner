@@ -27,6 +27,51 @@ jobs:
           cache: "pip"
       - name: Install requirements
         run: pip install -r requirements.txt
+      - name: Diagnose ADGA iCalendar feed (test branch only)
+        if: github.ref != 'refs/heads/main'
+        run: |
+          python - <<'PY'
+          import re
+          import urllib.request
+          from collections import Counter
+          from datetime import datetime
+          url = "https://adga.org/events/month/?shortcode=d0fa1991&ical=1"
+          request = urllib.request.Request(url, headers={"User-Agent":"Mozilla/5.0","Accept":"text/calendar, */*"})
+          with urllib.request.urlopen(request, timeout=60) as response:
+              raw = response.read(10000000)
+              print("HTTP:", response.status)
+              print("Content-Type:", response.headers.get("Content-Type"))
+              print("Final URL:", response.geturl())
+              print("Bytes:", len(raw))
+          body = raw.decode("utf-8-sig", errors="replace")
+          body = re.sub(r"\r?\n[ \t]", "", body)
+          print("Calendar header found:", "BEGIN:VCALENDAR" in body)
+          events = re.findall(r"BEGIN:VEVENT(.*?)END:VEVENT", body, flags=re.S)
+          print("VEVENT count:", len(events))
+          if not events:
+              print("Response preview:", repr(body[:300]))
+              raise SystemExit("No VEVENT records returned")
+          coverage = Counter()
+          dates = []
+          for event in events:
+              for line in event.splitlines():
+                  key = line.split(":", 1)[0].split(";", 1)[0].upper()
+                  if key in ("DTSTART","DTEND","SUMMARY","LOCATION","DESCRIPTION","URL","UID"):
+                      coverage[key] += 1
+                  if key == "DTSTART":
+                      match = re.search(r":(\d{8})", line)
+                      if match:
+                          dates.append(datetime.strptime(match.group(1), "%Y%m%d").date())
+          print("Field coverage:", dict(coverage))
+          if dates:
+              print("Earliest:", min(dates).isoformat())
+              print("Latest:", max(dates).isoformat())
+              print("Months:", dict(sorted(Counter(d.strftime("%Y-%m") for d in dates).items())))
+          print("First 5 summaries:")
+          for event in events[:5]:
+              line = next((x for x in event.splitlines() if x.startswith("SUMMARY:")), "")
+              print(" -", line[8:150])
+          PY
       - name: Refresh ADGA show archive
         run: python script/update_adga.py
       - name: Commit refreshed data if changed
