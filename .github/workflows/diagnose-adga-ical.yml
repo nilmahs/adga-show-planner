@@ -1,0 +1,61 @@
+name: Diagnose ADGA iCalendar feed
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch and summarize calendar feed
+        shell: bash
+        run: |
+          python - <<'PY'
+          import re
+          import urllib.request
+          from collections import Counter
+          from datetime import datetime
+          from urllib.parse import urlparse
+          url = "https://adga.org/events/month/?shortcode=d0fa1991&ical=1"
+          req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", "Accept": "text/calendar, text/plain, */*"})
+          with urllib.request.urlopen(req, timeout=60) as response:
+              data = response.read(10_000_000)
+              content_type = response.headers.get("Content-Type", "")
+              final_url = response.geturl()
+              print("HTTP:", response.status)
+              print("Content-Type:", content_type)
+              print("Final URL:", final_url)
+              print("Bytes:", len(data))
+          text = data.decode("utf-8-sig", errors="replace")
+          # RFC 5545 line folding
+          text = re.sub(r"\r?\n[ \t]", "", text)
+          print("Looks like VCALENDAR:", "BEGIN:VCALENDAR" in text)
+          events = re.findall(r"BEGIN:VEVENT(.*?)END:VEVENT", text, flags=re.S)
+          print("VEVENT count:", len(events))
+          if not events:
+              print("Response preview:", repr(text[:300]))
+              raise SystemExit("No VEVENT entries found; inspect the feed before changing the importer")
+          dates = []
+          fields = Counter()
+          for event in events:
+              for line in event.splitlines():
+                  key = line.split(":", 1)[0].split(";", 1)[0].upper()
+                  if key in ("DTSTART", "DTEND", "LOCATION", "DESCRIPTION", "SUMMARY", "URL", "UID"):
+                      fields[key] += 1
+                  if key == "DTSTART":
+                      match = re.search(r":(\d{8})", line)
+                      if match:
+                          dates.append(datetime.strptime(match.group(1), "%Y%m%d").date())
+          print("Field coverage:", dict(fields))
+          if dates:
+              print("Earliest event:", min(dates).isoformat())
+              print("Latest event:", max(dates).isoformat())
+              print("Events by month:", dict(sorted(Counter(d.strftime("%Y-%m") for d in dates).items())))
+          print("First five event summaries (no descriptions):")
+          for event in events[:5]:
+              summary = next((line.split(":",1)[1] for line in event.splitlines() if line.startswith("SUMMARY:")), "(none)")
+              print(" -", summary[:140])
+          PY

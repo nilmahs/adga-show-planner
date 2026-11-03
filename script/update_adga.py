@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 ROOT=Path(__file__).resolve().parents[1]
 DATA_JS=ROOT/"data"/"shows.js"
 CACHE_JSON=ROOT/"data"/"geocode_cache.json"
-SOURCE_URL="https://adga.org/adga-sanctioned-show-list/"
+SOURCE_URL="https://adga.org/events/"
 UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
 EMAIL_RE=re.compile(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}")
 PHONE_RE=re.compile(r"(?:\+?1[\s.\-]?)?(?:\(?\d{3}\)?[\s.\-]?)\d{3}[\s.\-]\d{4}")
@@ -42,112 +42,132 @@ def contact(p):
     return {"name":p[0],"address":", ".join(addr),"phone":phone,"email":email,"raw":"\n".join(p)}
 
 def fetch_rows():
-    headers = {
-        "User-Agent": UA,
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Cache-Control": "no-cache",
-        "Pragma": "no-cache",
-        "Referer": "https://adga.org/",
-        "Connection": "keep-alive",
-        "Upgrade-Insecure-Requests": "1",
-    }
+    """Read ADGA's Events Calendar month pages and show detail pages.
 
+    The old /adga-sanctioned-show-list/ endpoint was removed (HTTP 404).
+    Month views are used for discovery; individual events supply structured
+    date, venue, city, state, judges and show type information.
+    """
+    from calendar import monthrange
+    from urllib.parse import urljoin, urlparse
+    today = datetime.now(timezone.utc).date()
     session = requests.Session()
-    r = session.get(SOURCE_URL, timeout=60, headers=headers, allow_redirects=True)
-    r.raise_for_status()
-    soup = BeautifulSoup(r.text, "html.parser")
+    session.headers.update({"User-Agent": UA, "Accept": "text/html"})
+    # Revisit the current year and the following year; retain older archive.
+    months = [(y, m) for y in (today.year, today.year + 1)
+              for m in range(1, 13)
+              if (y, m) >= (today.year, today.month)]
+    event_urls = set()
+    for year, month in months:
+        url = f"https://adga.org/events/month/{year}-{month:02d}/"
+        response = session.get(url, timeout=60)
+        if response.status_code == 404:
+            # The calendar does not publish an archive for every month.
+            print(f"INFO: ADGA calendar month unavailable (404); skipping {url}")
+            continue
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, "html.parser")
+        for a in soup.select('a[href*="/event/"]'):
+            href = urljoin(response.url, a.get("href", ""))
+            parsed = urlparse(href)
+            if parsed.netloc.lower() in ("adga.org", "www.adga.org") and re.match(r"^/event/[^/]+/?$", parsed.path):
+                event_urls.add(parsed.scheme + "://" + parsed.netloc + parsed.path)
+    if not event_urls:
+        raise RuntimeError("ADGA calendar returned zero event links; preserving existing archive.")
 
-    table = None
-    for t in soup.find_all("table"):
-        table_text = compact(t.get_text(" ", strip=True)).lower()
-        if (
-            "date of judging" in table_text
-            and "show name" in table_text
-            and "location" in table_text
-            and "contact" in table_text
-        ):
-            table = t
-            break
-
-    if table is None:
-        dateish = re.compile(r"^\s*\d{1,2}/\d{1,2}/\d{4}")
-        for t in soup.find_all("table"):
-            good = 0
-            for tr in t.find_all("tr"):
-                td = tr.find_all(["td", "th"])
-                if len(td) >= 7 and dateish.search(compact(td[0].get_text(" ", strip=True))):
-                    good += 1
-                    if good >= 2:
-                        table = t
-                        break
-            if table is not None:
-                break
-
-    if table is None:
-        page_text = compact(soup.get_text(" ", strip=True))
-        has_heading = "ADGA Sanctioned Show List" in page_text
-        has_columns = "Date of Judging" in page_text and "Show Name" in page_text
-        has_known_date = bool(re.search(r"\b\d{1,2}/\d{1,2}/2026\b", page_text))
-        title = compact(soup.title.get_text(" ", strip=True)) if soup.title else "(no title)"
-        raise RuntimeError(
-            "ADGA sanctioned-show table was not found in the HTML returned to GitHub. "
-            f"HTTP={r.status_code}; final_url={r.url}; title={title!r}; "
-            f"page_chars={len(r.text)}; heading_present={has_heading}; "
-            f"column_text_present={has_columns}; date_text_present={has_known_date}. "
-            "Existing archive was not changed."
-        )
+    def labeled_value(soup, label):
+        # The Events Calendar 'Other' section uses adjacent dt/dd pairs.
+        for dt in soup.select("dt"):
+            if norm(dt.get_text(" ", strip=True)).rstrip(":") == norm(label):
+                dd = dt.find_next_sibling("dd")
+                if dd: return compact(dd.get_text(" ", strip=True))
+        return ""
 
     out = []
-    for tr in table.find_all("tr"):
-        cells = tr.find_all(["td", "th"])
-        if len(cells) < 7:
-            continue
-
-        p = [parts(c) for c in cells[:7]]
-        raw = joined(p[0], " ")
-        if not re.match(r"^\s*\d{1,2}/\d{1,2}/\d{4}", raw):
-            continue
-
+    failures = []
+    for url in sorted(event_urls):
         try:
-            start, end = parse_date_range(raw)
-        except Exception as e:
-            print(f"WARNING skipped date {raw!r}: {e}", file=sys.stderr)
-            continue
-
-        c = contact(p[6])
-        name = joined(p[1], " — ")
-        st = joined(p[2], " ")
-        loc = joined(p[3], " ")
-        key = " | ".join([start[:4], norm(name), norm(st), norm(loc)])
-
-        out.append({
-            "date_adga": raw,
-            "start": start,
-            "end": end,
-            "month": int(start[5:7]),
-            "show_name": name,
-            "state_original": st,
-            "state": st,
-            "location": loc,
-            "judges": joined(p[4], ", "),
-            "show_type": joined(p[5], ", "),
-            "contact_name": c["name"],
-            "contact_address": c["address"],
-            "contact_phone": c["phone"],
-            "contact_email": c["email"],
-            "contact_raw": c["raw"],
-            "source_key": key,
-            "source_url": SOURCE_URL,
-        })
-
+            response = session.get(url, timeout=60)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.text, "html.parser")
+            # Do not import conventions, meetings or other non-show events.
+            categories = [norm(a.get_text(" ", strip=True))
+                          for a in soup.select(".tribe-events-event-categories a, .tribe-events-event-meta a[href*='category']")]
+            if "shows" not in categories:
+                # ADGA's event pages show a 'Shows' link under Details.
+                # Some templates omit the conventional category CSS classes.
+                category_links = [norm(a.get_text(" ", strip=True))
+                                  for a in soup.select('a[href*="event-category"], a[href*="/category/"]')]
+                if "shows" not in category_links:
+                    print(f"INFO: Ignoring non-show event: {url}")
+                    continue
+            title = soup.select_one(".tribe-events-single-event-title, h1")
+            name = compact(title.get_text(" ", strip=True)) if title else ""
+            # ADGA renders ISO dates in the Details section, for example
+            # 'Start: November 6 (2026-11-06)' and 'End: November 8 (2026-11-08)'.
+            # Read that first instead of relying on the calendar plugin's
+            # optional attributes, which are absent on the current theme.
+            details = soup.select_one('.tribe-events-meta-group-details, .tribe-events-event-meta')
+            dates = []
+            if details:
+                dates = list(dict.fromkeys(re.findall(r'\b20\d{2}-\d{2}-\d{2}\b', details.get_text(' ', strip=True))))
+            if not dates:
+                dates = list(dict.fromkeys(re.findall(r'\b20\d{2}-\d{2}-\d{2}\b', soup.get_text(' ', strip=True))))
+            if not dates:
+                # Fallback for events that use HTML5 time attributes.
+                for el in soup.select('time[datetime], abbr[title], [itemprop="startDate"], [itemprop="endDate"]'):
+                    value = el.get('datetime') or el.get('title') or el.get('content') or ''
+                    m = re.search(r'20\d{2}-\d{2}-\d{2}', value)
+                    if m and m.group(0) not in dates: dates.append(m.group(0))
+            if not dates:
+                # The page can contain JSON-LD dates even when visible date attributes are absent.
+                for key in ('startDate', 'endDate'):
+                    matches = re.findall(r'["\']' + key + r'["\']\s*:\s*["\'](20\d{2}-\d{2}-\d{2})', response.text)
+                    for date in matches:
+                        if date not in dates: dates.append(date)
+            if not dates or not name:
+                raise ValueError("missing title or machine-readable event date")
+            start, end = dates[0], dates[1] if len(dates) > 1 else dates[0]
+            if end < start: end = start
+            city, state = labeled_value(soup, 'City'), labeled_value(soup, 'State')
+            # Most ADGA show pages explicitly include City and State under Other.
+            # For exceptions, use the venue address, not the contact's address.
+            venue = soup.select_one('.tribe-events-meta-group-venue, .tribe-events-address, .tribe-venue, .tribe-events-venue-details')
+            venue_text = compact(venue.get_text(' ', strip=True)) if venue else ''
+            if not city or not state:
+                match = re.search(r'([A-Za-z][A-Za-z .\'-]+?),\s*([A-Z]{2})\b', venue_text)
+                if match:
+                    city = city or compact(match.group(1))
+                    state = state or match.group(2)
+            location = city or venue_text
+            if not state or not location:
+                raise ValueError('missing city/location or state')
+            description = soup.select_one(".tribe-events-single-event-description")
+            contact_parts = parts(description) if description else []
+            c = contact(contact_parts)
+            raw = start.replace("-", "/") + (" - " + end.replace("-", "/") if end != start else "")
+            key = " | ".join([start[:4], norm(name), norm(state), norm(location)])
+            out.append({
+                "date_adga": raw, "start": start, "end": end,
+                "month": int(start[5:7]), "show_name": name,
+                "state_original": state, "state": state, "location": location,
+                "judges": labeled_value(soup, "Judges"),
+                "show_type": labeled_value(soup, "Show Type"),
+                "contact_name": c["name"], "contact_address": c["address"],
+                "contact_phone": c["phone"], "contact_email": c["email"],
+                "contact_raw": c["raw"], "source_key": key, "source_url": url,
+            })
+        except Exception as exc:
+            failures.append(f"{url}: {exc}")
+    if failures:
+        for issue in failures[:15]:
+            print(f"WARNING skipped ADGA event: {issue}", file=sys.stderr)
     if not out:
-        raise RuntimeError(
-            "ADGA show table was found, but zero valid show rows were parsed. "
-            "Existing archive was not changed."
-        )
-
-    print(f"Fetched and parsed {len(out)} current ADGA show rows.")
+        raise RuntimeError("No valid sanctioned shows parsed; preserving existing archive.")
+    # A wholesale parse failure must not be committed as a successful refresh.
+    if len(failures) > max(5, len(out)):
+        raise RuntimeError(f"Too many ADGA event parse failures ({len(failures)} vs {len(out)} shows); preserving archive.")
+    print(f"Fetched {len(out)} show events from {len(event_urls)} ADGA calendar events.")
     return out
 
 def load_existing():
