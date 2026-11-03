@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 ROOT=Path(__file__).resolve().parents[1]
 DATA_JS=ROOT/"data"/"shows.js"
 CACHE_JSON=ROOT/"data"/"geocode_cache.json"
-SOURCE_URL="https://adga.org/adga-sanctioned-show-list/"
+SOURCE_URL="https://adga.org/events/"
 UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
 EMAIL_RE=re.compile(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}")
 PHONE_RE=re.compile(r"(?:\+?1[\s.\-]?)?(?:\(?\d{3}\)?[\s.\-]?)\d{3}[\s.\-]\d{4}")
@@ -103,33 +103,45 @@ def fetch_rows():
                     continue
             title = soup.select_one(".tribe-events-single-event-title, h1")
             name = compact(title.get_text(" ", strip=True)) if title else ""
+            # ADGA renders ISO dates in the Details section, for example
+            # 'Start: November 6 (2026-11-06)' and 'End: November 8 (2026-11-08)'.
+            # Read that first instead of relying on the calendar plugin's
+            # optional attributes, which are absent on the current theme.
+            details = soup.select_one('.tribe-events-meta-group-details, .tribe-events-event-meta')
             dates = []
-            for el in soup.select("abbr.tribe-events-abbr[title], .tribe-events-meta-group-details abbr[title]"):
-                value = el.get("title", "")
-                m = re.search(r"\\d{4}-\\d{2}-\\d{2}", value)
-                if m: dates.append(m.group(0))
-            # The event metadata usually exposes machine-readable dates.
-            for el in soup.select("[datetime]"):
-                m = re.search(r"\\d{4}-\\d{2}-\\d{2}", el.get("datetime", ""))
-                if m: dates.append(m.group(0))
+            if details:
+                dates = list(dict.fromkeys(re.findall(r'\b20\d{2}-\d{2}-\d{2}\b', details.get_text(' ', strip=True))))
             if not dates:
-                for key in ("startDate", "endDate"):
-                    for m in re.finditer(r'["\\\']' + key + r'["\\\']\\s*:\\s*["\\\'](\\d{4}-\\d{2}-\\d{2})', response.text):
-                        dates.append(m.group(1))
+                dates = list(dict.fromkeys(re.findall(r'\b20\d{2}-\d{2}-\d{2}\b', soup.get_text(' ', strip=True))))
+            if not dates:
+                # Fallback for events that use HTML5 time attributes.
+                for el in soup.select('time[datetime], abbr[title], [itemprop="startDate"], [itemprop="endDate"]'):
+                    value = el.get('datetime') or el.get('title') or el.get('content') or ''
+                    m = re.search(r'20\d{2}-\d{2}-\d{2}', value)
+                    if m and m.group(0) not in dates: dates.append(m.group(0))
+            if not dates:
+                # The page can contain JSON-LD dates even when visible date attributes are absent.
+                for key in ('startDate', 'endDate'):
+                    matches = re.findall(r'["\']' + key + r'["\']\s*:\s*["\'](20\d{2}-\d{2}-\d{2})', response.text)
+                    for date in matches:
+                        if date not in dates: dates.append(date)
             if not dates or not name:
                 raise ValueError("missing title or machine-readable event date")
             start, end = dates[0], dates[1] if len(dates) > 1 else dates[0]
             if end < start: end = start
-            city, state = labeled_value(soup, "City"), labeled_value(soup, "State")
-            venue = soup.select_one(".tribe-venue, .tribe-events-venue-details")
-            location = city or (compact(venue.get_text(" ", strip=True)) if venue else "")
-            if not state:
-                address = soup.select_one(".tribe-region, .tribe-events-address")
-                address_text = compact(address.get_text(" ", strip=True)) if address else ""
-                match = re.search(r"\\b([A-Z]{2})\\b(?:\\s+\\d{5})?", address_text)
-                if match: state = match.group(1)
+            city, state = labeled_value(soup, 'City'), labeled_value(soup, 'State')
+            # Most ADGA show pages explicitly include City and State under Other.
+            # For exceptions, use the venue address, not the contact's address.
+            venue = soup.select_one('.tribe-events-meta-group-venue, .tribe-events-address, .tribe-venue, .tribe-events-venue-details')
+            venue_text = compact(venue.get_text(' ', strip=True)) if venue else ''
+            if not city or not state:
+                match = re.search(r'([A-Za-z][A-Za-z .\'-]+?),\s*([A-Z]{2})\b', venue_text)
+                if match:
+                    city = city or compact(match.group(1))
+                    state = state or match.group(2)
+            location = city or venue_text
             if not state or not location:
-                raise ValueError("missing city/location or state")
+                raise ValueError('missing city/location or state')
             description = soup.select_one(".tribe-events-single-event-description")
             contact_parts = parts(description) if description else []
             c = contact(contact_parts)
