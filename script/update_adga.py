@@ -61,6 +61,10 @@ def fetch_rows():
     for year, month in months:
         url = f"https://adga.org/events/month/{year}-{month:02d}/"
         response = session.get(url, timeout=60)
+        if response.status_code == 404:
+            # The calendar does not publish an archive for every month.
+            print(f"INFO: ADGA calendar month unavailable (404); skipping {url}")
+            continue
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
         for a in soup.select('a[href*="/event/"]'):
@@ -90,7 +94,13 @@ def fetch_rows():
             categories = [norm(a.get_text(" ", strip=True))
                           for a in soup.select(".tribe-events-event-categories a, .tribe-events-event-meta a[href*='category']")]
             if "shows" not in categories:
-                continue
+                # ADGA's event pages show a 'Shows' link under Details.
+                # Some templates omit the conventional category CSS classes.
+                category_links = [norm(a.get_text(" ", strip=True))
+                                  for a in soup.select('a[href*="event-category"], a[href*="/category/"]')]
+                if "shows" not in category_links:
+                    print(f"INFO: Ignoring non-show event: {url}")
+                    continue
             title = soup.select_one(".tribe-events-single-event-title, h1")
             name = compact(title.get_text(" ", strip=True)) if title else ""
             dates = []
