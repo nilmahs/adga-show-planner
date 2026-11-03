@@ -10,9 +10,9 @@ header h1{margin:0;font:700 29px Georgia,serif;letter-spacing:.2px} header p{mar
 #reset{background:var(--deep);color:white;border-color:var(--deep)}
 .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:14px 18px 5px}.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;box-shadow:0 1px 4px #0000000c}.metric{font:700 25px Georgia,serif;color:var(--deep)}.label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-top:2px}
 .timeline-wrap{padding:9px 18px 14px}.timeline{display:flex;align-items:end;gap:5px;height:92px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 10px 5px}.monthbar{flex:1;text-align:center;cursor:pointer;min-width:30px}.bar{width:75%;margin:auto;background:#d7a07f;border-radius:4px 4px 1px 1px;transition:.2s}.monthbar:hover .bar,.monthbar.active .bar{background:#4a4a4a}.mon{font-size:10px;color:var(--muted);margin-top:3px}.count{font-size:10px;color:var(--ink)}
-.main{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(360px,.75fr);gap:14px;padding:0 18px 18px}#map{height:610px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#e8e6de}.side{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;height:610px;display:flex;flex-direction:column}.sidehead{padding:12px 14px;border-bottom:1px solid var(--line);font-weight:700}.showlist{overflow:auto;padding:6px}.showcard{padding:11px 10px;border-bottom:1px solid #ece6db;cursor:pointer;border-radius:8px}.showcard:hover{background:#f2eee4}.showtitle{font-weight:700;font-size:13px}.meta{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45}.dist{font-weight:650;color:var(--accent2)}.star{float:right;background:transparent;border:0;padding:0 3px;font-size:18px;color:#a99f90}.star.saved{color:#4a4a4a}
+.main{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(360px,.75fr);gap:14px;padding:0 18px 18px}#map{height:610px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#e8e6de}.side{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;height:610px;display:flex;flex-direction:column}.sidehead{padding:12px 14px;border-bottom:1px solid var(--line);font-weight:700}.showlist{overflow:auto;padding:6px}.showcard{padding:11px 10px;border-bottom:1px solid #ece6db;cursor:pointer;border-radius:8px}.showcard:hover{background:#f2eee4}.showtitle{font-weight:700;font-size:13px;text-transform:uppercase}.meta{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45}.dist{font-weight:650;color:var(--accent2)}.star{float:right;background:transparent;border:0;padding:0 3px;font-size:18px;color:#a99f90}.star.saved{color:#4a4a4a}
 .tablewrap{margin:0 18px 24px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:auto;max-height:570px}table{border-collapse:collapse;width:100%;font-size:12px}thead th{position:sticky;top:0;background:#ece8de;z-index:2;text-align:left;padding:9px 8px;border-bottom:1px solid #cfc8bb;white-space:nowrap}tbody td{padding:8px;border-bottom:1px solid #eee8dd;vertical-align:top}tbody tr:hover{background:#f4f0e7}.email{word-break:break-word}.tiny{font-size:10px;color:var(--muted)}
-.legend{background:#fffaf6ee;padding:8px 10px;border-radius:8px;box-shadow:0 1px 6px #0002;font-size:11px;line-height:1.55}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}.leaflet-popup-content{margin:12px 14px;line-height:1.4}.popup-title{font-weight:700;font-size:14px;margin-bottom:4px}.popup-meta{font-size:12px;color:#4b5563}.homeLabel{font-weight:700;color:#2f2f2f}
+.legend{background:#fffaf6ee;padding:8px 10px;border-radius:8px;box-shadow:0 1px 6px #0002;font-size:11px;line-height:1.55}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}.leaflet-popup-content{margin:12px 14px;line-height:1.4}.popup-title{font-weight:700;font-size:14px;margin-bottom:4px;text-transform:uppercase}.popup-meta{font-size:12px;color:#4b5563}.homeLabel{font-weight:700;color:#2f2f2f}
 footer{padding:0 18px 22px;color:var(--muted);font-size:10px;line-height:1.5}
 @media(max-width:1050px){.toolbar{grid-template-columns:repeat(3,1fr);position:static}.summary{grid-template-columns:repeat(2,1fr)}.main{grid-template-columns:1fr}.side{height:440px}#map{height:520px}}
 @media(max-width:700px){header{padding:18px 16px 14px}header h1{font-size:24px}header p{font-size:12px;line-height:1.4}.toolbar{grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px}.field.searchfield,.field.homefield,.field.actionwide{grid-column:1/-1}.field.action{justify-content:stretch}.field.action label{display:none}input,select,button{min-height:44px;font-size:16px;width:100%}.summary{padding:10px 12px 4px;gap:8px}.card{padding:10px}.metric{font-size:21px}.timeline-wrap{padding:8px 12px 10px;overflow-x:auto}.timeline{min-width:520px;height:84px}.main{padding:0 12px 14px;gap:10px}#map{height:52vh;min-height:360px;border-radius:10px}.side{height:auto;max-height:none;border-radius:10px}.showlist{overflow:visible}.showcard{padding:14px 11px}.showtitle{font-size:15px}.meta{font-size:13px}.tablewrap{display:none}.legend{font-size:10px;max-width:155px;padding:6px 8px}.leaflet-control-attribution{font-size:8px}.leaflet-popup-content{max-width:235px;margin:10px 12px}footer{padding:0 12px 18px;font-size:10px}.mobile-note{display:block}}
@@ -218,6 +218,22 @@ header .tool-disclaimer{
   background:#e9ece4 !important;
 }
 
+
+/* Desktop usability: let the document scroll rather than nesting vertical scrollbars. */
+@media (min-width:1051px){
+  #map{height:760px}
+  .side{height:auto;min-height:760px;overflow:visible}
+  .showlist{overflow:visible;flex:none}
+  .tablewrap{max-height:none;overflow-x:auto;overflow-y:visible}
+  thead th{position:static}
+}
+/* On tablet, preserve stacked layout but avoid the second vertical scroll area. */
+@media (min-width:701px) and (max-width:1050px){
+  .side{height:auto;overflow:visible}
+  .showlist{overflow:visible}
+  .tablewrap{max-height:none;overflow-x:auto;overflow-y:visible}
+  thead th{position:static}
+}
 </style></head><body>
 <header>
   <h1>ADGA Show Planner</h1>
@@ -281,6 +297,7 @@ const LOWER48_CENTER=[38.4,-96.5];
 const LOWER48_ZOOM=4;
 const map=L.map('map',{
   zoomControl:true,
+  scrollWheelZoom:false,
   minZoom:LOWER48_ZOOM,
   maxBounds:LOWER48_BOUNDS,
   maxBoundsViscosity:1.0,
@@ -323,7 +340,7 @@ function focusShow(id){const x=shows.find(y=>y.id===id);if(x&&x.lat!==null){map.
 function toggleSaved(id,ev){ev?.stopPropagation();saved.has(id)?saved.delete(id):saved.add(id);localStorage.setItem('adgaSavedShows',JSON.stringify([...saved]));render()}
 function sortedShows(f){const mode=document.getElementById('sortBy')?.value||'date';return [...f].sort((a,b)=>{if(mode==='distance'){const ad=a.distance===null?Infinity:a.distance,bd=b.distance===null?Infinity:b.distance;return ad-bd||a.start.localeCompare(b.start)||a.show_name.localeCompare(b.show_name)}if(mode==='state'){return a.state.localeCompare(b.state)||a.start.localeCompare(b.start)||a.show_name.localeCompare(b.show_name)}if(mode==='name'){return a.show_name.localeCompare(b.show_name)||a.start.localeCompare(b.start)}return a.start.localeCompare(b.start)||(a.distance??Infinity)-(b.distance??Infinity)||a.show_name.localeCompare(b.show_name)});}
 function renderList(f){const box=document.getElementById('showlist');box.innerHTML=sortedShows(f).map(x=>`<div class="showcard" data-card="${x.id}" onclick="focusShow(${x.id})"><button class="star ${saved.has(x.id)?'saved':''}" onclick="toggleSaved(${x.id},event)" title="Save show">★</button><div class="showtitle">${esc(x.show_name)}</div><div class="meta"><b>${esc(fmtDate(x.start,x.end))}</b> · ${esc(x.location)}, ${esc(x.state_original)}<br>${x.distance!==null?`<span class="dist">~${x.distance.toLocaleString()} mi</span> from ${esc(HOME.label)} · `:''}${esc(x.show_type)}</div></div>`).join('')||'<div class="meta" style="padding:20px">No shows match these filters.</div>'}
-function renderTable(f){document.querySelector('#tbl tbody').innerHTML=[...f].sort((a,b)=>a.start.localeCompare(b.start)).map(x=>`<tr onclick="focusShow(${x.id})" style="cursor:pointer"><td><button class="star ${saved.has(x.id)?'saved':''}" onclick="toggleSaved(${x.id},event)">★</button></td><td>${esc(fmtDate(x.start,x.end))}</td><td><b>${esc(x.show_name)}</b></td><td>${esc(x.location)}</td><td>${esc(x.state_original)}</td><td>${x.distance??'—'}</td><td>${esc(x.judges)}</td><td>${esc(x.show_type)}</td><td>${esc(x.contact_name)}</td><td>${esc(x.contact_phone)}</td><td class="email">${x.contact_email?`<a href="mailto:${esc(x.contact_email)}">${esc(x.contact_email)}</a>`:''}</td></tr>`).join('')}
+function renderTable(f){document.querySelector('#tbl tbody').innerHTML=[...f].sort((a,b)=>a.start.localeCompare(b.start)).map(x=>`<tr onclick="focusShow(${x.id})" style="cursor:pointer"><td><button class="star ${saved.has(x.id)?'saved':''}" onclick="toggleSaved(${x.id},event)">★</button></td><td>${esc(fmtDate(x.start,x.end))}</td><td><b style="text-transform:uppercase">${esc(x.show_name)}</b></td><td>${esc(x.location)}</td><td>${esc(x.state_original)}</td><td>${x.distance??'—'}</td><td>${esc(x.judges)}</td><td>${esc(x.show_type)}</td><td>${esc(x.contact_name)}</td><td>${esc(x.contact_phone)}</td><td class="email">${x.contact_email?`<a href="mailto:${esc(x.contact_email)}">${esc(x.contact_email)}</a>`:''}</td></tr>`).join('')}
 function renderTimeline(f){let counts={};for(let m=1;m<=12;m++)counts[m]=0;f.forEach(x=>{if(x.month)counts[x.month]++});let max=Math.max(...Object.values(counts),1);document.getElementById('timeline').innerHTML=Object.entries(counts).map(([m,c])=>`<div class="monthbar ${state.month==m?'active':''}" onclick="setMonth(${m})"><div class="count">${c}</div><div class="bar" style="height:${Math.max(2,c/max*55)}px"></div><div class="mon">${monthNames[m]}</div></div>`).join('')}
 function setMonth(m){state.month=(state.month==m?'':String(m));document.getElementById('month').value=state.month;render()}
 
