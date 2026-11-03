@@ -30,6 +30,7 @@ jobs:
       - name: Refresh ADGA show archive
         run: python script/update_adga.py
       - name: Commit refreshed data if changed
+        if: github.ref == 'refs/heads/main'
         run: |
           if git diff --quiet -- data/shows.js data/geocode_cache.json; then
             echo "No data changes to commit."
@@ -41,13 +42,16 @@ jobs:
             git push
           fi
       - name: Configure GitHub Pages
+        if: github.ref == 'refs/heads/main'
         uses: actions/configure-pages@v5
       - name: Upload GitHub Pages artifact
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v4
         with:
           path: "."
 
   deploy:
+    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
