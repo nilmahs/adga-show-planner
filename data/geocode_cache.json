@@ -1269,5 +1269,11 @@
     "lon": -85.759407,
     "query": "LOUISVILLE, KY, USA",
     "source": "OpenStreetMap Nominatim"
+  },
+  "waycross|georgia": {
+    "lat": 31.2135511,
+    "lon": -82.3540178,
+    "query": "WAYCROSS, GEORGIA, USA",
+    "source": "OpenStreetMap Nominatim"
   }
 }
