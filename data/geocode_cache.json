@@ -1275,5 +1275,11 @@
     "lon": -82.3540178,
     "query": "WAYCROSS, GEORGIA, USA",
     "source": "OpenStreetMap Nominatim"
+  },
+  "fort worth|texas": {
+    "lat": 32.753177,
+    "lon": -97.3327459,
+    "query": "FORT WORTH, TEXAS, USA",
+    "source": "OpenStreetMap Nominatim"
   }
 }
