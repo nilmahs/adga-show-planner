@@ -1281,5 +1281,11 @@
     "lon": -97.3327459,
     "query": "FORT WORTH, TEXAS, USA",
     "source": "OpenStreetMap Nominatim"
+  },
+  "harrisburg|pa": {
+    "lat": 40.2663107,
+    "lon": -76.8861122,
+    "query": "HARRISBURG, PA, USA",
+    "source": "OpenStreetMap Nominatim"
   }
 }
