@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 ROOT=Path(__file__).resolve().parents[1]
 DATA_JS=ROOT/"data"/"shows.js"
 CACHE_JSON=ROOT/"data"/"geocode_cache.json"
-SOURCE_URL="https://adga.org/events/"
+SOURCE_URL="https://adga.org/adga-calendar/"
 UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
 EMAIL_RE=re.compile(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}")
 PHONE_RE=re.compile(r"(?:\+?1[\s.\-]?)?(?:\(?\d{3}\)?[\s.\-]?)\d{3}[\s.\-]\d{4}")
@@ -59,7 +59,7 @@ def fetch_rows():
               if (y, m) >= (today.year, today.month)]
     event_urls = set()
     for year, month in months:
-        url = f"https://adga.org/events/month/{year}-{month:02d}/"
+        url = f"https://adga.org/events/month/{year}-{month:02d}/?pagename=adga-calendar&shortcode=cc150c85"
         response = session.get(url, timeout=60)
         if response.status_code == 404:
             # The calendar does not publish an archive for every month.
