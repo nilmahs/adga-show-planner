@@ -1287,5 +1287,11 @@
     "lon": -76.8861122,
     "query": "HARRISBURG, PA, USA",
     "source": "OpenStreetMap Nominatim"
+  },
+  "denison|texas": {
+    "lat": null,
+    "lon": null,
+    "query": "DENISON, TEXAS, USA",
+    "source": "geocoding failed"
   }
 }
