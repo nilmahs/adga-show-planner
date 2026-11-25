@@ -1293,5 +1293,11 @@
     "lon": null,
     "query": "DENISON, TEXAS, USA",
     "source": "geocoding failed"
+  },
+  "houston|texas": {
+    "lat": null,
+    "lon": null,
+    "query": "HOUSTON, TEXAS, USA",
+    "source": "geocoding failed"
   }
 }
